@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synthwave.fm | Winf™</title>
+    <style>
+        :root {
+            --color-black: #0D0D0D;
+            --color-white: #FFFFFF;
+            --color-accent: #FF00FF;
+            --color-secondary: #00FFFF;
+            --color-tertiary: #AAFF00;
+            --font-family: 'Inter', sans-serif;
+            --spacing-unit: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-black);
+            color: var(--color-white);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+        }
+
+        header {
+            padding: calc(var(--spacing-unit) * 2) 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background-color: rgba(13, 13, 13, 0.95);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-white);
+            text-decoration: none;
+        }
+
+        .main-nav {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 3);
+        }
+
+        .nav-link {
+            color: var(--color-white);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: var(--spacing-unit) 0;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--color-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+        }
+
+        .user-name {
+            font-weight: 500;
+        }
+
+        .main-content {
+            padding-top: 80px;
+            min-height: calc(100vh - 80px);
+        }
+
+        .hero {
+            padding: calc(var(--spacing-unit) * 6) 0;
+            background: linear-gradient(to bottom, rgba(255, 0, 255, 0.1), rgba(13, 13, 13, 0));
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            background: linear-gradient(to right, var(--color-accent), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto calc(var(--spacing-unit) * 4);
+            opacity: 0.9;
+        }
+
+        .search-bar {
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: calc(var(--spacing-unit) * 2);
+            background-color: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 8px;
+            color: var(--color-white);
+            font-size: 16px;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .section {
+            padding: calc(var(--spacing-unit) * 6) 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: calc(var(--spacing-unit) * 4);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .view-all {
+            color: var(--color-accent);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .featured-tracks {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: calc(var(--spacing-unit) * 3);
+        }
+
+        .track-card {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .track-card:hover {
+            transform: translateY(-4px);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .track-image {
+            aspect-ratio: 1 / 1;
+            background-color: rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .track-image:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-button {
+            width: 64px;
+            height: 64px;
+            background-color: var(--color-accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .track-info {
+            padding: calc(var(--spacing-unit) * 2);
+        }
+
+        .track-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-unit);
+        }
+
+        .track-artist {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .track-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            opacity: 0.6;
+        }
+
+        .playlists-section {
+            background-color: rgba(0, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: calc(var(--spacing-unit) * 4);
+            margin-bottom: calc(var(--spacing-unit) * 6);
+        }
+
+        .playlists-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: calc(var(--spacing-unit) * 3);
+        }
+
+        .playlist-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .playlist-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .playlist-image {
+            aspect-ratio: 1 / 1;
+            background-color: rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .playlist-info {
+            padding: calc(var(--spacing-unit) * 2);
+        }
+
+        .playlist-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-unit);
+        }
+
+        .playlist-tracks {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .artists-section {
+            margin-bottom: calc(var(--spacing-unit) * 6);
+        }
+
+        .artists-grid {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 3);
+            overflow-x: auto;
+            padding-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .artist-card {
+            flex: 0 0 150px;
+            text-align: center;
+        }
+
+        .artist-image {
+            width: 150px;
+            height: 150px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .artist-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-unit);
+        }
+
+        .artist-genre {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .player-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(13, 13, 13, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: calc(var(--spacing-unit) * 2) 0;
+            z-index: 1000;
+        }
+
+        .player-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .now-playing {
+            display: flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .now-playing-image {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .now-playing-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .now-playing-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .now-playing-artist {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 3);
+        }
+
+        .control-button {
+            width: 32px;
+            height: 32px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .play-control {
+            width: 40px;
+            height: 40px;
+            background-color: var(--color-accent);
+        }
+
+        .progress-container {
+            flex-grow: 1;
+            max-width: 400px;
+            margin: 0 calc(var(--spacing-unit) * 3);
+        }
+
+        .progress-bar {
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-bottom: var(--spacing-unit);
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 35%;
+            background-color: var(--color-accent);
+        }
+
+        .progress-time {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .player-options {
+            display: flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .option-button {
+            width: 24px;
+            height: 24px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-unit);
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .volume-fill {
+            height: 100%;
+            width: 70%;
+            background-color: var(--color-white);
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+
+            .main-nav {
+                order: 3;
+                width: 100%;
+                margin-top: calc(var(--spacing-unit) * 2);
+                justify-content: space-between;
+            }
+
+            .player-content {
+                flex-direction: column;
+                gap: calc(var(--spacing-unit) * 2);
+            }
+
+            .progress-container {
+                width: 100%;
+                max-width: none;
+                order: -1;
+            }
+
+            .player-options {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">SYNTHWAVE.FM</a>
+                <nav class="main-nav">
+                    <a href="#" class="nav-link">Descobrir</a>
+                    <a href="#" class="nav-link">Biblioteca</a>
+                    <a href="#" class="nav-link">Rádio</a>
+                    <a href="#" class="nav-link">Artistas</a>
+                </nav>
+                <div class="user-profile">
+                    <div class="avatar"></div>
+                    <div class="user-name">Ricardo</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">Sua Experiência Sonora Premium</h1>
+                <p class="hero-subtitle">Descubra o melhor da música synthwave, retrowave e darksynth curada especialmente para membros Winf™.</p>
+                <div class="search-bar">
+                    <input type="text" class="search-input" placeholder="Buscar artistas, álbuns ou faixas...">
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Faixas em Destaque</h2>
+                    <a href="#" class="view-all">Ver Todas</a>
+                </div>
+                <div class="featured-tracks">
+                    <div class="track-card">
+                        <div class="track-image">
+                            <div class="play-overlay">
+                                <div class="play-button"></div>
+                            </div>
+                        </div>
+                        <div class="track-info">
+                            <h3 class="track-title">Midnight Drive</h3>
+                            <div class="track-artist">NeonWave</div>
+                            <div class="track-meta">
+                                <span>3:45</span>
+                                <span>1.2M plays</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="track-card">
+                        <div class="track-image">
+                            <div class="play-overlay">
+                                <div class="play-button"></div>
+                            </div>
+                        </div>
+                        <div class="track-info">
+                            <h3 class="track-title">Cyber Dreams</h3>
+                            <div class="track-artist">RetroSynth</div>
+                            <div class="track-meta">
+                                <span>4:12</span>
+                                <span>890K plays</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="track-card">
+                        <div class="track-image">
+                            <div class="play-overlay">
+                                <div class="play-button"></div>
+                            </div>
+                        </div>
+                        <div class="track-info">
+                            <h3 class="track-title">Neon City</h3>
+                            <div class="track-artist">DarkPulse</div>
+                            <div class="track-meta">
+                                <span>5:30</span>
+                                <span>2.5M plays</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="track-card">
+                        <div class="track-image">
+                            <div class="play-overlay">
+                                <div class="play-button"></div>
+                            </div>
+                        </div>
+                        <div class="track-info">
+                            <h3 class="track-title">Digital Sunset</h3>
+                            <div class="track-artist">WaveRunner</div>
+                            <div class="track-meta">
+                                <span>4:05</span>
+                                <span>1.8M plays</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="playlists-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Playlists Exclusivas</h2>
+                    <a href="#" class="view-all">Ver Todas</a>
+                </div>
+                <div class="playlists-grid">
+                    <div class="playlist-card">
+                        <div class="playlist-image"></div>
+                        <div class="playlist-info">
+                            <h3 class="playlist-title">Night Drive</h3>
+                            <div class="playlist-tracks">24 faixas</div>
+                        </div>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-image"></div>
+                        <div class="playlist-info">
+                            <h3 class="playlist-title">Retro Gaming</h3>
+                            <div class="playlist-tracks">18 faixas</div>
+                        </div>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-image"></div>
+                        <div class="playlist-info">
+                            <h3 class="playlist-title">Cyber Noir</h3>
+                            <div class="playlist-tracks">32 faixas</div>
+                        </div>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-image"></div>
+                        <div class="playlist-info">
+                            <h3 class="playlist-title">Outrun Classics</h3>
+                            <div class="playlist-tracks">15 faixas</div>
+                        </div>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-image"></div>
+                        <div class="playlist-info">
+                            <h3 class="playlist-title">Future Nostalgia</h3>
+                            <div class="playlist-tracks">27 faixas</div>
+                        </div>
+                    </div>
+                    <div class="playlist-card">
+                        <div class="playlist-image"></div>
+                        <div class="playlist-info">
+                            <h3 class="playlist-title">Darkwave</h3>
+                            <div class="playlist-tracks">21 faixas</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="artists-section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">Artistas em Destaque</h2>
+                    <a href="#" class="view-all">Ver Todos</a>
+                </div>
+                <div class="artists-grid">
+                    <div class="artist-card">
+                        <div class="artist-image"></div>
+                        <h3 class="artist-name">NeonWave</h3>
+                        <div class="artist-genre">Synthwave</div>
+                    </div>
+                    <div class="artist-card">
+                        <div class="artist-image"></div>
+                        <h3 class="artist-name">RetroSynth</h3>
+                        <div class="artist-genre">Retrowave</div>
+                    </div>
+                    <div class="artist-card">
+                        <div class="artist-image"></div>
+                        <h3 class="artist-name">DarkPulse</h3>
+                        <div class="artist-genre">Darksynth</div>
+                    </div>
+                    <div class="artist-card">
+                        <div class="artist-image"></div>
+                        <h3 class="artist-name">WaveRunner</h3>
+                        <div class="artist-genre">Outrun</div>
+                    </div>
+                    <div class="artist-card">
+                        <div class="artist-image"></div>
+                        <h3 class="artist-name">CyberNeon</h3>
+                        <div class="artist-genre">Cyberpunk</div>
+                    </div>
+                    <div class="artist-card">
+                        <div class="artist-image"></div>
+                        <h3 class="artist-name">RetroFuture</h3>
+                        <div class="artist-genre">Vaporwave</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div class="player-bar">
+        <div class="container">
+            <div class="player-content">
+                <div class="now-playing">
+                    <div class="now-playing-image"></div>
+                    <div class="now-playing-info">
+                        <div class="now-playing-title">Midnight Drive</div>
+                        <div class="now-playing-artist">NeonWave</div>
+                    </div>
+                </div>
+                
+                <div class="player-controls">
+                    <div class="control-button"></div>
+                    <div class="control-button"></div>
+                    <div class="control-button play-control"></div>
+                    <div class="control-button"></div>
+                    <div class="control-button"></div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-fill"></div>
+                    </div>
+                    <div class="progress-time">
+                        <span>1:18</span>
+                        <span>3:45</span>
+                    </div>
+                </div>
+                
+                <div class="player-options">
+                    <div class="option-button"></div>
+                    <div class="option-button"></div>
+                    <div class="volume-control">
+                        <div class="option-button"></div>
+                        <div class="volume-slider">
+                            <div class="volume-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

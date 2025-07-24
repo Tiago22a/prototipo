@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winf - Premium Quality Windowfilm</title>
+    <style>
+        /* Reset e Estilos Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background-color: #0D0D0D;
+            color: #F5F5F5;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+        
+        /* Tipografia */
+        h1 {
+            font-size: 48px;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+        }
+        
+        h2 {
+            font-size: 36px;
+            font-weight: 300;
+            letter-spacing: -0.02em;
+            margin-bottom: 24px;
+            text-transform: uppercase;
+        }
+        
+        p {
+            font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 16px;
+            max-width: 640px;
+        }
+        
+        .quote {
+            font-size: 20px;
+            font-style: italic;
+            border-left: 1px solid #666666;
+            padding-left: 24px;
+            margin: 32px 0;
+        }
+        
+        /* Header */
+        header {
+            padding: 24px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            background-color: rgba(13, 13, 13, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+        }
+        
+        .logo span {
+            font-weight: 300;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 32px;
+        }
+        
+        nav ul li a {
+            color: #F5F5F5;
+            text-decoration: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: opacity 0.3s ease;
+        }
+        
+        nav ul li a:hover {
+            opacity: 0.7;
+        }
+        
+        .cta-buttons {
+            display: flex;
+        }
+        
+        .cta-button {
+            background: transparent;
+            border: 1px solid #F5F5F5;
+            color: #F5F5F5;
+            padding: 8px 16px;
+            margin-left: 16px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button.primary {
+            background: #F5F5F5;
+            color: #0D0D0D;
+        }
+        
+        .cta-button:hover {
+            opacity: 0.8;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            width: 100%;
+            text-align: center;
+        }
+        
+        .hero-title {
+            font-size: 64px;
+            font-weight: 200;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+        }
+        
+        .hero-subtitle {
+            font-size: 24px;
+            font-weight: 300;
+            max-width: 800px;
+            margin: 0 auto 48px;
+        }
+        
+        .hero-equation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 64px;
+            font-size: 36px;
+            font-weight: 200;
+        }
+        
+        .hero-equation span {
+            margin: 0 16px;
+        }
+        
+        /* Concept Section */
+        .concept {
+            padding: 120px 0;
+            background-color: #1A1A1A;
+        }
+        
+        .concept-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 64px;
+            align-items: center;
+        }
+        
+        .concept-image {
+            width: 100%;
+            height: 500px;
+            background-color: #333333;
+        }
+        
+        /* Products Section */
+        .products {
+            padding: 120px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 64px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+        
+        .product-card {
+            background-color: #1A1A1A;
+            padding: 32px;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+        
+        .product-title {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 16px;
+        }
+        
+        .product-description {
+            font-size: 16px;
+            color: #CCCCCC;
+            margin-bottom: 24px;
+        }
+        
+        .product-features {
+            list-style: none;
+        }
+        
+        .product-features li {
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #AAAAAA;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 64px 0;
+            background-color: #0D0D0D;
+            border-top: 1px solid #333333;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .footer-logo {
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            margin-bottom: 24px;
+        }
+        
+        .footer-copyright {
+            font-size: 14px;
+            color: #666666;
+        }
+        
+        /* Animações e Efeitos */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate {
+            animation: fadeIn 0.8s ease forwards;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 1024px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-title {
+                font-size: 48px;
+            }
+            
+            .hero-equation {
+                font-size: 24px;
+            }
+            
+            nav ul {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">WINF<span>™</span></div>
+                <nav>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Sobre</a></li>
+                        <li><a href="#">Produtos</a></li>
+                        <li><a href="#">Contato</a></li>
+                    </ul>
+                </nav>
+                <div class="cta-buttons">
+                    <button class="cta-button">Área de Membros</button>
+                    <button class="cta-button primary">Blackshop</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content animate">
+                <div class="hero-equation">
+                    BRASIL <span>+</span> CHINA <span>=</span> WINF™
+                </div>
+                <h1 class="hero-title">A UNIÃO PERFEITA</h1>
+                <p class="hero-subtitle">
+                    A Winf™ une a alma brasileira — criativa, ousada, vibrante — com o cérebro da nova era tecnológica: a China. Juntos, criamos películas de vidro e proteção solar que desafiam os padrões globais.
+                </p>
+                <div class="quote">
+                    "O mundo inteiro depende da China. A Winf™ também. E isso é uma vantagem."
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Concept Section -->
+    <section class="concept">
+        <div class="container">
+            <div class="concept-grid">
+                <div class="concept-image"></div>
+                <div class="concept-content animate">
+                    <h2>A PRODUÇÃO DO FUTURO</h2>
+                    <p>
+                        A produção chinesa atual não é apenas sobre volume, mas sobre padrões elevados de qualidade, precisão tecnológica, inovação e sofisticação.
+                    </p>
+                    <p>
+                        Combinamos a criatividade brasileira com a excelência tecnológica chinesa para criar produtos que representam o melhor dos dois mundos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products">
+        <div class="container">
+            <div class="section-header animate">
+                <h2>GRADE DE PRODUTOS DE ELITE</h2>
+                <p>
+                    DE 1.000 OPÇÕES PARA APENAS O ESSENCIAL
+                </p>
+                <p>
+                    Com base em 30 anos de experiência e os melhores especialistas do setor, selecionamos apenas o que realmente importa. Sem complicação, com máxima tecnologia.
+                </p>
+            </div>
+            <div class="products-grid">
+                <div class="product-card animate">
+                    <h3 class="product-title">Winf Select™</h3>
+                    <p class="product-description">
+                        Linha arquitetônica de alto rendimento para vidros inteligentes.
+                    </p>
+                    <ul class="product-features">
+                        <li>Invisible - Transparência com alta performance térmica</li>
+                        <li>DualReflect - Reflexão controlada e proteção térmica</li>
+                        <li>BlackPro - Máxima privacidade e controle solar</li>
+                        <li>Redução de calor em até 80%</li>
+                    </ul>
+                </div>
+                <div class="product-card animate">
+                    <h3 class="product-title">AeroCore™</h3>
+                    <p class="product-description">
+                        Tecnologia aeroespacial para mobilidade premium.
+                    </p>
+                    <ul class="product-features">
+                        <li>MOBILE - Soluções para automóveis de luxo</li>
+                        <li>MARINE - Proteção para embarcações e iates</li>
+                        <li>AIR - Tecnologia para aeronaves executivas</li>
+                        <li>Design disruptivo com foco em performance</li>
+                    </ul>
+                </div>
+                <div class="product-card animate">
+                    <h3 class="product-title">NeoSkin™ ADV-X</h3>
+                    <p class="product-description">
+                        PPF apocalíptico brutalista para proteção extrema.
+                    </p>
+                    <ul class="product-features">
+                        <li>Proteção máxima para carros ultra-premium</li>
+                        <li>Tecnologia de autorregeneração</li>
+                        <li>Durabilidade superior em condições extremas</li>
+                        <li>Estética inspirada no estilo Mad Max</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <div class="footer-logo">WINF<span>™</span></div>
+                    <p class="footer-copyright">© 2025 Winf™. Todos os direitos reservados.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

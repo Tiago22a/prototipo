@@ -1,0 +1,1278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W-RANK™ | Dashboard Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos Globais */
+        :root {
+            --black-deep: #000000;
+            --black-secondary: #111111;
+            --white-premium: #FFFFFF;
+            --white-secondary: rgba(255, 255, 255, 0.7);
+            --gold-accent: #D4AF37;
+            --silver-accent: #C0C0C0;
+            --blue-accent: #0047AB;
+            --red-accent: #FF0000;
+            --purple-accent: #800080;
+            --green-accent: #AAFF00;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: var(--black-deep);
+            color: var(--white-premium);
+            min-height: 100vh;
+            overflow-x: hidden;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Custom Cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(170,255,0,0.5);
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s;
+            mix-blend-mode: difference;
+        }
+        
+        .custom-cursor.hover {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(170,255,0,0.3);
+        }
+        
+        /* Cabeçalho */
+        header {
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        header.scrolled {
+            padding: 1.5rem 4rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 0.5rem;
+            color: var(--white-premium);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--white-premium);
+            font-weight: 600;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+        
+        nav a {
+            color: var(--white-premium);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--white-secondary);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--black-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            border: 1px solid var(--white-secondary);
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .user-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .user-level {
+            font-size: 0.7rem;
+            color: var(--white-secondary);
+        }
+        
+        /* Conteúdo Principal */
+        .main-content {
+            padding-top: 8rem;
+            padding-bottom: 4rem;
+            display: flex;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            padding: 2rem;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            height: calc(100vh - 8rem);
+            position: fixed;
+        }
+        
+        .sidebar-menu {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--white-premium);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.1rem;
+            transition: all 0.3s ease;
+            padding: 0.5rem 0;
+        }
+        
+        .sidebar-link:hover {
+            transform: translateX(5px);
+        }
+        
+        .sidebar-link.active {
+            color: var(--green-accent);
+        }
+        
+        .sidebar-icon {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+        
+        .sidebar-divider {
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 1rem 0;
+        }
+        
+        /* Dashboard Content */
+        .dashboard-content {
+            margin-left: 280px;
+            padding: 2rem 4rem;
+            width: calc(100% - 280px);
+        }
+        
+        .dashboard-header {
+            margin-bottom: 3rem;
+        }
+        
+        .dashboard-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .dashboard-subtitle {
+            font-size: 1rem;
+            color: var(--white-secondary);
+            max-width: 600px;
+            line-height: 1.6;
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .stat-card {
+            background-color: var(--black-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-title {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+            color: var(--white-secondary);
+        }
+        
+        .stat-icon {
+            width: 30px;
+            height: 30px;
+            opacity: 0.7;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .stat-change.positive {
+            color: var(--green-accent);
+        }
+        
+        .stat-change.negative {
+            color: var(--red-accent);
+        }
+        
+        /* Quantum Metrics */
+        .quantum-metrics {
+            margin-bottom: 3rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 0.1rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            opacity: 0.7;
+        }
+        
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        .metric-card {
+            background-color: var(--black-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .metric-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 0.05rem;
+        }
+        
+        .metric-value {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+        
+        .progress-bar.blue {
+            background-color: var(--blue-accent);
+        }
+        
+        .progress-bar.red {
+            background-color: var(--red-accent);
+        }
+        
+        .progress-bar.purple {
+            background-color: var(--purple-accent);
+        }
+        
+        .progress-bar.gold {
+            background-color: var(--gold-accent);
+        }
+        
+        .metric-description {
+            font-size: 0.9rem;
+            color: var(--white-secondary);
+            line-height: 1.6;
+        }
+        
+        /* Badges Section */
+        .badges-section {
+            margin-bottom: 3rem;
+        }
+        
+        .badges-container {
+            display: flex;
+            gap: 1.5rem;
+            overflow-x: auto;
+            padding-bottom: 1rem;
+        }
+        
+        .badge-card {
+            background-color: var(--black-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            min-width: 200px;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .badge-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .badge-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1rem;
+        }
+        
+        .badge-title {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .badge-description {
+            font-size: 0.8rem;
+            color: var(--white-secondary);
+        }
+        
+        .badge-locked {
+            opacity: 0.5;
+            position: relative;
+        }
+        
+        .badge-locked::after {
+            content: '🔒';
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.2rem;
+        }
+        
+        /* Recent Activity */
+        .recent-activity {
+            margin-bottom: 3rem;
+        }
+        
+        .activity-list {
+            background-color: var(--black-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .activity-item {
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .activity-icon svg {
+            width: 20px;
+            height: 20px;
+            opacity: 0.7;
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-title {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .activity-description {
+            font-size: 0.9rem;
+            color: var(--white-secondary);
+        }
+        
+        .activity-time {
+            font-size: 0.8rem;
+            color: var(--white-secondary);
+        }
+        
+        /* Theme Toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: var(--black-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .theme-toggle:hover {
+            transform: scale(1.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .theme-icon {
+            width: 24px;
+            height: 24px;
+            opacity: 0.7;
+        }
+        
+        /* Distintivos Conquistados */
+        .distintivos-section {
+            margin-bottom: 3rem;
+        }
+        
+        .distintivos-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+        
+        .distintivo-card {
+            background-color: var(--black-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .distintivo-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .distintivo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .distintivo-title {
+            font-size: 1.2rem;
+            font-weight: 500;
+            letter-spacing: 0.05rem;
+        }
+        
+        .distintivo-title.blue {
+            color: var(--blue-accent);
+        }
+        
+        .distintivo-title.red {
+            color: var(--red-accent);
+        }
+        
+        .distintivo-title.purple {
+            color: var(--purple-accent);
+        }
+        
+        .distintivo-title.gold {
+            color: var(--gold-accent);
+        }
+        
+        .distintivo-value {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .distintivo-description {
+            font-size: 0.9rem;
+            color: var(--white-secondary);
+            line-height: 1.6;
+            margin-top: 1rem;
+        }
+        
+        /* Versão Minimalista */
+        .minimal-mode .distintivo-title.blue,
+        .minimal-mode .distintivo-title.red,
+        .minimal-mode .distintivo-title.purple,
+        .minimal-mode .distintivo-title.gold {
+            color: var(--white-premium);
+        }
+        
+        .minimal-mode .progress-bar.blue,
+        .minimal-mode .progress-bar.red,
+        .minimal-mode .progress-bar.purple,
+        .minimal-mode .progress-bar.gold {
+            background-color: var(--white-premium);
+        }
+        
+        /* Toggle de Modo */
+        .mode-toggle {
+            position: fixed;
+            bottom: 2rem;
+            left: 2rem;
+            width: 50px;
+            height: 50px;
+            background-color: var(--black-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+        
+        .mode-toggle:hover {
+            transform: scale(1.1);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        .mode-icon {
+            width: 24px;
+            height: 24px;
+            opacity: 0.7;
+        }
+        
+        /* Media Queries */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            header {
+                padding: 1.5rem 2rem;
+            }
+            
+            header.scrolled {
+                padding: 1rem 2rem;
+            }
+            
+            nav ul {
+                gap: 1.5rem;
+            }
+            
+            .sidebar {
+                width: 240px;
+            }
+            
+            .dashboard-content {
+                margin-left: 240px;
+                width: calc(100% - 240px);
+                padding: 2rem;
+            }
+            
+            .distintivos-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                padding: 1rem;
+            }
+            
+            header.scrolled {
+                padding: 0.8rem 1rem;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .dashboard-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 1.5rem;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Custom Cursor -->
+    <div class="custom-cursor"></div>
+    
+    <!-- Header -->
+    <header>
+        <a href="#" class="logo">W-RANK<span>™</span></a>
+        
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Dimensões</a></li>
+                <li><a href="#">Distintivos</a></li>
+                <li><a href="#">Histórico</a></li>
+            </ul>
+        </nav>
+        
+        <div class="user-profile">
+            <div class="user-avatar">M</div>
+            <div class="user-info">
+                <div class="user-name">Marcos Silva</div>
+                <div class="user-level">Nível Quantum</div>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-menu">
+                <a href="#" class="sidebar-link active">
+                    <svg class="sidebar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="3" width="7" height="7"></rect>
+                        <rect x="14" y="14" width="7" height="7"></rect>
+                        <rect x="3" y="14" width="7" height="7"></rect>
+                    </svg>
+                    Dashboard
+                </a>
+                <a href="#" class="sidebar-link">
+                    <svg class="sidebar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                        <path d="M2 17l10 5 10-5"></path>
+                        <path d="M2 12l10 5 10-5"></path>
+                    </svg>
+                    Dimensões
+                </a>
+                <a href="#" class="sidebar-link">
+                    <svg class="sidebar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="8" r="7"></circle>
+                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                    </svg>
+                    Distintivos
+                </a>
+                <a href="#" class="sidebar-link">
+                    <svg class="sidebar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 20h9"></path>
+                        <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+                    </svg>
+                    Histórico
+                </a>
+                <a href="#" class="sidebar-link">
+                    <svg class="sidebar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                    Desafios
+                </a>
+                
+                <div class="sidebar-divider"></div>
+                
+                <a href="#" class="sidebar-link">
+                    <svg class="sidebar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    Perfil
+                </a>
+                <a href="#" class="sidebar-link">
+                    <svg class="sidebar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    Configurações
+                </a>
+                <a href="#" class="sidebar-link">
+                    <svg class="sidebar-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    Sair
+                </a>
+            </div>
+        </div>
+        
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Dashboard Quantum</h1>
+                <p class="dashboard-subtitle">Bem-vindo ao seu painel de controle Winf™. Aqui você pode acompanhar seu progresso, conquistas e métricas de desempenho no ecossistema.</p>
+            </div>
+            
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-title">Projetos Concluídos</div>
+                        <div class="stat-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-value">27</div>
+                    <div class="stat-change positive">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="18 15 12 9 6 15"></polyline>
+                        </svg>
+                        12% este mês
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-title">Distintivos</div>
+                        <div class="stat-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="8" r="7"></circle>
+                                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-value">14</div>
+                    <div class="stat-change positive">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="18 15 12 9 6 15"></polyline>
+                        </svg>
+                        3 novos
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-title">Nível Quantum</div>
+                        <div class="stat-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                <path d="M2 17l10 5 10-5"></path>
+                                <path d="M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-value">7</div>
+                    <div class="stat-change">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="18 15 12 9 6 15"></polyline>
+                        </svg>
+                        Próximo: 2.500 XP
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-title">WinfCoins</div>
+                        <div class="stat-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="stat-value">3.250</div>
+                    <div class="stat-change positive">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="18 15 12 9 6 15"></polyline>
+                        </svg>
+                        750 este mês
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Distintivos Conquistados -->
+            <div class="distintivos-section">
+                <h2 class="section-title">
+                    <svg class="section-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="8" r="7"></circle>
+                        <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                    </svg>
+                    DISTINTIVOS CONQUISTADOS
+                </h2>
+                
+                <div class="distintivos-grid">
+                    <div class="distintivo-card">
+                        <div class="distintivo-header">
+                            <h3 class="distintivo-title blue">QUANTUM KNOWLEDGE™</h3>
+                            <div class="distintivo-value">85%</div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar blue" style="width: 85%;"></div>
+                        </div>
+                        <p class="distintivo-description">Seu conhecimento sobre tecnologias de proteção Winf™ está entre os mais avançados do ecossistema.</p>
+                    </div>
+                    
+                    <div class="distintivo-card">
+                        <div class="distintivo-header">
+                            <h3 class="distintivo-title red">CORTEX INFLUENCE™</h3>
+                            <div class="distintivo-value">70%</div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar red" style="width: 70%;"></div>
+                        </div>
+                        <p class="distintivo-description">Suas contribuições para a comunidade CORTEXCLUB.IO têm impacto significativo.</p>
+                    </div>
+                    
+                    <div class="distintivo-card">
+                        <div class="distintivo-header">
+                            <h3 class="distintivo-title purple">NEURAL MEMORY™</h3>
+                            <div class="distintivo-value">60%</div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar purple" style="width: 60%;"></div>
+                        </div>
+                        <p class="distintivo-description">Você participou de experiências exclusivas que enriqueceram sua jornada no ecossistema.</p>
+                    </div>
+                    
+                    <div class="distintivo-card">
+                        <div class="distintivo-header">
+                            <h3 class="distintivo-title gold">TACTICAL ASSETS™</h3>
+                            <div class="distintivo-value">90%</div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar gold" style="width: 90%;"></div>
+                        </div>
+                        <p class="distintivo-description">Seu portfólio de produtos Winf™ demonstra escolhas estratégicas e complementares.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Quantum Metrics -->
+            <div class="quantum-metrics">
+                <h2 class="section-title">
+                    <svg class="section-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                        <path d="M2 17l10 5 10-5"></path>
+                        <path d="M2 12l10 5 10-5"></path>
+                    </svg>
+                    Métricas Quantum
+                </h2>
+                
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h3 class="metric-title">Experiência Quantum</h3>
+                            <div class="metric-value">7.850 / 10.000</div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar blue" style="width: 78.5%;"></div>
+                        </div>
+                        <p class="metric-description">Sua experiência acumulada no ecossistema Winf™. Aumente participando de treinamentos, eventos e completando projetos.</p>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h3 class="metric-title">Influência Neural</h3>
+                            <div class="metric-value">3.420 / 5.000</div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar purple" style="width: 68.4%;"></div>
+                        </div>
+                        <p class="metric-description">Seu impacto na comunidade Winf™. Aumente compartilhando conhecimento, respondendo dúvidas e contribuindo com conteúdo.</p>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h3 class="metric-title">Maestria Técnica</h3>
+                            <div class="metric-value">4.250 / 5.000</div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar gold" style="width: 85%;"></div>
+                        </div>
+                        <p class="metric-description">Seu domínio técnico sobre produtos e tecnologias Winf™. Aumente completando certificações e aplicando técnicas avançadas.</p>
+                    </div>
+                    
+                    <div class="metric-card">
+                        <div class="metric-header">
+                            <h3 class="metric-title">Inovação Cortex</h3>
+                            <div class="metric-value">2.780 / 5.000</div>
+                        </div>
+                        <div class="progress-container">
+                            <div class="progress-bar red" style="width: 55.6%;"></div>
+                        </div>
+                        <p class="metric-description">Sua capacidade de inovação e adaptação. Aumente experimentando novas técnicas, produtos e compartilhando casos de sucesso.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Badges Section -->
+            <div class="badges-section">
+                <h2 class="section-title">
+                    <svg class="section-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    Conquistas Recentes
+                </h2>
+                
+                <div class="badges-container">
+                    <div class="badge-card">
+                        <div class="badge-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="8" r="7"></circle>
+                                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                            </svg>
+                        </div>
+                        <h3 class="badge-title">Mestre AeroCore™</h3>
+                        <p class="badge-description">Completou 50 instalações perfeitas de AeroCore™ MOBILE</p>
+                    </div>
+                    
+                    <div class="badge-card">
+                        <div class="badge-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#0047AB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                <path d="M2 17l10 5 10-5"></path>
+                                <path d="M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <h3 class="badge-title">Visionário Quantum</h3>
+                        <p class="badge-description">Contribuiu com 10 ideias inovadoras no fórum CORTEXCLUB.IO</p>
+                    </div>
+                    
+                    <div class="badge-card">
+                        <div class="badge-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#FF0000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                            </svg>
+                        </div>
+                        <h3 class="badge-title">Pioneiro NeoSkin™</h3>
+                        <p class="badge-description">Um dos primeiros a aplicar o NeoSkin™ ADV-X HyperGuard</p>
+                    </div>
+                    
+                    <div class="badge-card badge-locked">
+                        <div class="badge-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#800080" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <h3 class="badge-title">Embaixador Elite</h3>
+                        <p class="badge-description">Conquiste trazendo 5 novos aplicadores para o ecossistema</p>
+                    </div>
+                    
+                    <div class="badge-card badge-locked">
+                        <div class="badge-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#AAFF00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                        </div>
+                        <h3 class="badge-title">Inovador Marítimo</h3>
+                        <p class="badge-description">Complete 10 instalações em embarcações de luxo</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recent Activity -->
+            <div class="recent-activity">
+                <h2 class="section-title">
+                    <svg class="section-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                    </svg>
+                    Atividade Recente
+                </h2>
+                
+                <div class="activity-list">
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="8" r="7"></circle>
+                                <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+                            </svg>
+                        </div>
+                        <div class="activity-content">
+                            <h3 class="activity-title">Distintivo Conquistado</h3>
+                            <p class="activity-description">Você conquistou o distintivo "Mestre AeroCore™" após completar sua 50ª instalação perfeita.</p>
+                        </div>
+                        <div class="activity-time">2h atrás</div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                                <path d="M2 17l10 5 10-5"></path>
+                                <path d="M2 12l10 5 10-5"></path>
+                            </svg>
+                        </div>
+                        <div class="activity-content">
+                            <h3 class="activity-title">Nível Quantum Aumentado</h3>
+                            <p class="activity-description">Você avançou para o Nível Quantum 7. Desbloqueou acesso a novos produtos e recursos exclusivos.</p>
+                        </div>
+                        <div class="activity-time">1d atrás</div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="8" x2="12" y2="16"></line>
+                                <line x1="8" y1="12" x2="16" y2="12"></line>
+                            </svg>
+                        </div>
+                        <div class="activity-content">
+                            <h3 class="activity-title">WinfCoins Adicionados</h3>
+                            <p class="activity-description">Você recebeu 250 WinfCoins por completar o curso "Técnicas Avançadas de Aplicação NeoSkin™".</p>
+                        </div>
+                        <div class="activity-time">3d atrás</div>
+                    </div>
+                    
+                    <div class="activity-item">
+                        <div class="activity-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                            </svg>
+                        </div>
+                        <div class="activity-content">
+                            <h3 class="activity-title">Projeto Concluído</h3>
+                            <p class="activity-description">Você registrou a conclusão do projeto "Ferrari 488 GTB - Proteção Completa" com AeroCore™ MOBILE.</p>
+                        </div>
+                        <div class="activity-time">5d atrás</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="themeToggle">
+        <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </div>
+    
+    <!-- Mode Toggle -->
+    <div class="mode-toggle" id="modeToggle">
+        <svg class="mode-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="9" y1="3" x2="9" y2="21"></line>
+        </svg>
+    </div>
+    
+    <!-- JavaScript -->
+    <script>
+        // Header Scroll Effect
+        const header = document.querySelector('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+        
+        // Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        let isDarkTheme = true;
+        
+        themeToggle.addEventListener('click', () => {
+            if (isDarkTheme) {
+                document.documentElement.style.setProperty('--black-deep', '#FFFFFF');
+                document.documentElement.style.setProperty('--black-secondary', '#F5F5F5');
+                document.documentElement.style.setProperty('--white-premium', '#000000');
+                document.documentElement.style.setProperty('--white-secondary', 'rgba(0, 0, 0, 0.7)');
+                themeToggle.innerHTML = `
+                    <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                `;
+            } else {
+                document.documentElement.style.setProperty('--black-deep', '#000000');
+                document.documentElement.style.setProperty('--black-secondary', '#111111');
+                document.documentElement.style.setProperty('--white-premium', '#FFFFFF');
+                document.documentElement.style.setProperty('--white-secondary', 'rgba(255, 255, 255, 0.7)');
+                themeToggle.innerHTML = `
+                    <svg class="theme-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                `;
+            }
+            isDarkTheme = !isDarkTheme;
+        });
+        
+        // Mode Toggle (Minimal vs Colorful)
+        const modeToggle = document.getElementById('modeToggle');
+        let isMinimalMode = false;
+        
+        modeToggle.addEventListener('click', () => {
+            document.body.classList.toggle('minimal-mode');
+            isMinimalMode = !isMinimalMode;
+            
+            if (isMinimalMode) {
+                modeToggle.innerHTML = `
+                    <svg class="mode-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <circle cx="12" cy="12" r="4"></circle>
+                    </svg>
+                `;
+            } else {
+                modeToggle.innerHTML = `
+                    <svg class="mode-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="9" y1="3" x2="9" y2="21"></line>
+                    </svg>
+                `;
+            }
+        });
+        
+        // Custom Cursor
+        const cursor = document.querySelector('.custom-cursor');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+        
+        document.addEventListener('mousedown', () => {
+            cursor.classList.add('hover');
+        });
+        
+        document.addEventListener('mouseup', () => {
+            cursor.classList.remove('hover');
+        });
+        
+        // Add hover effect to interactive elements
+        const interactiveElements = document.querySelectorAll('a, button, .stat-card, .metric-card, .badge-card, .activity-item, .distintivo-card');
+        
+        interactiveElements.forEach(element => {
+            element.addEventListener('mouseenter', () => {
+                cursor.classList.add('hover');
+            });
+            
+            element.addEventListener('mouseleave', () => {
+                cursor.classList.remove('hover');
+            });
+        });
+    </script>
+</body>
+</html>

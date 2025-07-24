@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winf - WhatsApp IA</title>
+    <style>
+        /* Reset e Estilos Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background-color: #111111;
+            color: #F5F5F5;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            margin-bottom: 16px;
+        }
+        
+        .logo span {
+            font-weight: 300;
+        }
+        
+        .header-subtitle {
+            font-size: 18px;
+            font-weight: 300;
+            color: #AAAAAA;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Chat Interface */
+        .chat-interface {
+            display: flex;
+            flex: 1;
+            background-color: #0D0D0D;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 320px;
+            background-color: #1A1A1A;
+            border-right: 1px solid #333333;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid #333333;
+        }
+        
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .sidebar-description {
+            font-size: 14px;
+            color: #AAAAAA;
+        }
+        
+        .avatar-selector {
+            padding: 20px;
+            border-bottom: 1px solid #333333;
+        }
+        
+        .selector-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 16px;
+        }
+        
+        .avatars {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        
+        .avatar-option {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background-color: #333333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .avatar-option:hover {
+            transform: scale(1.05);
+        }
+        
+        .avatar-option.active {
+            border: 2px solid #F5F5F5;
+        }
+        
+        .avatar-icon {
+            width: 32px;
+            height: 32px;
+            background-color: #F5F5F5;
+            border-radius: 50%;
+        }
+        
+        .avatar-label {
+            position: absolute;
+            bottom: -24px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            white-space: nowrap;
+            color: #AAAAAA;
+        }
+        
+        .conversation-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .conversation-item {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .conversation-item:hover {
+            background-color: #333333;
+        }
+        
+        .conversation-item.active {
+            background-color: #333333;
+        }
+        
+        .conversation-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .conversation-title {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .conversation-time {
+            font-size: 12px;
+            color: #AAAAAA;
+        }
+        
+        .conversation-preview {
+            font-size: 13px;
+            color: #AAAAAA;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid #333333;
+        }
+        
+        .new-chat-button {
+            width: 100%;
+            padding: 12px;
+            background-color: #F5F5F5;
+            color: #0D0D0D;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .new-chat-button:hover {
+            opacity: 0.9;
+        }
+        
+        .button-icon {
+            width: 16px;
+            height: 16px;
+            background-color: #0D0D0D;
+            border-radius: 50%;
+        }
+        
+        /* Chat Area */
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid #333333;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .chat-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: #333333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chat-avatar-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #F5F5F5;
+            border-radius: 50%;
+        }
+        
+        .chat-info {
+            flex: 1;
+        }
+        
+        .chat-name {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .chat-status {
+            font-size: 13px;
+            color: #AAAAAA;
+        }
+        
+        .chat-actions {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .action-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333333;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .action-button:hover {
+            background-color: #444444;
+        }
+        
+        .action-icon {
+            width: 20px;
+            height: 20px;
+            background-color: #F5F5F5;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .message {
+            display: flex;
+            gap: 16px;
+            max-width: 80%;
+        }
+        
+        .message.incoming {
+            align-self: flex-start;
+        }
+        
+        .message.outgoing {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+        
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #333333;
+            flex-shrink: 0;
+        }
+        
+        .message-content {
+            background-color: #333333;
+            padding: 16px;
+            border-radius: 12px;
+            position: relative;
+        }
+        
+        .message.incoming .message-content {
+            border-top-left-radius: 0;
+        }
+        
+        .message.outgoing .message-content {
+            background-color: #1E3A8A;
+            border-top-right-radius: 0;
+        }
+        
+        .message-text {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        
+        .message-time {
+            font-size: 12px;
+            color: #AAAAAA;
+            text-align: right;
+        }
+        
+        .message-image {
+            width: 100%;
+            max-width: 300px;
+            height: 200px;
+            background-color: #444444;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .message-file {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background-color: #444444;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .file-icon {
+            width: 32px;
+            height: 32px;
+            background-color: #F5F5F5;
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+        
+        .file-info {
+            flex: 1;
+        }
+        
+        .file-name {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .file-size {
+            font-size: 12px;
+            color: #AAAAAA;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            margin-top: 8px;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #AAAAAA;
+            border-radius: 50%;
+            animation: typing 1.5s infinite ease-in-out;
+        }
+        
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-6px);
+            }
+        }
+        
+        .day-divider {
+            text-align: center;
+            margin: 24px 0;
+            position: relative;
+        }
+        
+        .day-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: #333333;
+            z-index: 1;
+        }
+        
+        .day-text {
+            display: inline-block;
+            background-color: #0D0D0D;
+            padding: 0 16px;
+            font-size: 12px;
+            color: #AAAAAA;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .chat-input {
+            padding: 20px;
+            border-top: 1px solid #333333;
+        }
+        
+        .input-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .attachment-button {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: #333333;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .attachment-button:hover {
+            background-color: #444444;
+        }
+        
+        .attachment-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #F5F5F5;
+        }
+        
+        .message-input {
+            flex: 1;
+            background-color: #333333;
+            border: none;
+            border-radius: 24px;
+            padding: 14px 20px;
+            font-size: 14px;
+            color: #F5F5F5;
+            outline: none;
+        }
+        
+        .message-input::placeholder {
+            color: #AAAAAA;
+        }
+        
+        .send-button {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: #F5F5F5;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .send-button:hover {
+            opacity: 0.9;
+        }
+        
+        .send-icon {
+            width: 24px;
+            height: 24px;
+            background-color: #0D0D0D;
+        }
+        
+        /* Capabilities Panel */
+        .capabilities-panel {
+            width: 320px;
+            background-color: #1A1A1A;
+            border-left: 1px solid #333333;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .panel-header {
+            padding: 20px;
+            border-bottom: 1px solid #333333;
+        }
+        
+        .panel-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .panel-description {
+            font-size: 14px;
+            color: #AAAAAA;
+        }
+        
+        .capabilities-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .capability-group {
+            margin-bottom: 32px;
+        }
+        
+        .group-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .capability-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .capability-icon {
+            width: 32px;
+            height: 32px;
+            background-color: #333333;
+            border-radius: 8px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .capability-icon-inner {
+            width: 16px;
+            height: 16px;
+            background-color: #F5F5F5;
+        }
+        
+        .capability-content {
+            flex: 1;
+        }
+        
+        .capability-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .capability-description {
+            font-size: 13px;
+            color: #AAAAAA;
+        }
+        
+        .panel-footer {
+            padding: 20px;
+            border-top: 1px solid #333333;
+        }
+        
+        .integration-button {
+            width: 100%;
+            padding: 12px;
+            background-color: transparent;
+            color: #F5F5F5;
+            border: 1px solid #F5F5F5;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .integration-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsividade */
+        @media (max-width: 1200px) {
+            .capabilities-panel {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .chat-header {
+                padding: 16px;
+            }
+            
+            .chat-messages {
+                padding: 16px;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+            
+            .chat-input {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">WINF<span>™</span> IA</div>
+            <p class="header-subtitle">Conheça nossos assistentes virtuais especializados, projetados para oferecer suporte premium e personalizado.</p>
+        </div>
+        
+        <div class="chat-interface">
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h2 class="sidebar-title">WhatsApp IA Winf</h2>
+                    <p class="sidebar-description">Selecione um avatar ou inicie uma nova conversa</p>
+                </div>
+                
+                <div class="avatar-selector">
+                    <h3 class="selector-title">Personalidades IA</h3>
+                    <div class="avatars">
+                        <div class="avatar-option active">
+                            <div class="avatar-icon"></div>
+                            <span class="avatar-label">Concierge</span>
+                        </div>
+                        <div class="avatar-option">
+                            <div class="avatar-icon"></div>
+                            <span class="avatar-label">Specialist</span>
+                        </div>
+                        <div class="avatar-option">
+                            <div class="avatar-icon"></div>
+                            <span class="avatar-label">Partner</span>
+                        </div>
+                        <div class="avatar-option">
+                            <div class="avatar-icon"></div>
+                            <span class="avatar-label">Support</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="conversation-list">
+                    <div class="conversation-item active">
+                        <div class="conversation-header">
+                            <div class="conversation-title">Winf Concierge</div>
+                            <div class="conversation-time">Agora</div>
+                        </div>
+                        <div class="conversation-preview">Como posso ajudar com sua experiência Winf hoje?</div>
+                    </div>
+                    
+                    <div class="conversation-item">
+                        <div class="conversation-header">
+                            <div class="conversation-title">Winf Specialist</div>
+                            <div class="conversation-time">Ontem</div>
+                        </div>
+                        <div class="conversation-preview">Aqui estão as especificações técnicas do AeroCore™...</div>
+                    </div>
+                    
+                    <div class="conversation-item">
+                        <div class="conversation-header">
+                            <div class="conversation-title">Winf Partner</div>
+                            <div class="conversation-time">22/05</div>
+                        </div>
+                        <div class="conversation-preview">Seu relatório de vendas do mês está disponível...</div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-footer">
+                    <button class="new-chat-button">
+                        <div class="button-icon"></div>
+                        <span>Nova Conversa</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Chat Area -->
+            <div class="chat-area">
+                <div class="chat-header">
+                    <div class="chat-avatar">
+                        <div class="chat-avatar-icon"></div>
+                    </div>
+                    <div class="chat-info">
+                        <div class="chat-name">Winf Concierge</div>
+                        <div class="chat-status">Online • Personalidade IA Premium</div>
+                    </div>
+                    <div class="chat-actions">
+                        <button class="action-button">
+                            <div class="action-icon"></div>
+                        </button>
+                        <button class="action-button">
+                            <div class="action-icon"></div>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="chat-messages">
+                    <div class="day-divider">
+                        <span class="day-text">Hoje</span>
+                    </div>
+                    
+                    <div class="message incoming">
+                        <div class="message-avatar"></div>
+                        <div class="message-content">
+                            <div class="message-text">
+                                Olá! Sou o Concierge da Winf™, seu assistente pessoal para uma experiência premium com nossas películas de alta performance. Como posso ajudar você hoje?
+                            </div>
+                            <div class="message-time">10:30</div>
+                        </div>
+                    </div>
+                    
+                    <div class="message outgoing">
+                        <div class="message-avatar"></div>
+                        <div class="message-content">
+                            <div class="message-text">
+                                Olá! Estou interessado em películas para meu apartamento. Tenho grandes janelas com muita exposição solar.
+                            </div>
+                            <div class="message-time">10:32</div>
+                        </div>
+                    </div>
+                    
+                    <div class="message incoming">
+                        <div class="message-avatar"></div>
+                        <div class="message-content">
+                            <div class="message-text">
+                                Excelente escolha! Para apartamentos com grande exposição solar, recomendo nossa linha Winf Select™, especialmente desenvolvida para ambientes residenciais premium.
+                            </div>
+                            <div class="message-time">10:33</div>
+                        </div>
+                    </div>
+                    
+                    <div class="message incoming">
+                        <div class="message-avatar"></div>
+                        <div class="message-content">
+                            <div class="message-text">
+                                Temos três opções que seriam perfeitas para o seu caso:
+                            </div>
+                            <div class="message-image"></div>
+                            <div class="message-text">
+                                1. <strong>Winf Select™ Invisible</strong>: Transparência com alta performance térmica<br>
+                                2. <strong>Winf Select™ DualReflect</strong>: Reflexão controlada e proteção térmica<br>
+                                3. <strong>Winf Select™ BlackPro</strong>: Máxima privacidade e controle solar
+                            </div>
+                            <div class="message-time">10:35</div>
+                        </div>
+                    </div>
+                    
+                    <div class="message outgoing">
+                        <div class="message-avatar"></div>
+                        <div class="message-content">
+                            <div class="message-text">
+                                Interessante! Qual delas tem melhor redução de calor? O apartamento fica muito quente no verão.
+                            </div>
+                            <div class="message-time">10:37</div>
+                        </div>
+                    </div>
+                    
+                    <div class="message incoming">
+                        <div class="message-avatar"></div>
+                        <div class="message-content">
+                            <div class="message-text">
+                                Para máxima redução de calor, a Winf Select™ BlackPro é a mais eficiente, com redução de até 80% do calor solar. No entanto, ela também reduz significativamente a luminosidade e tem um aspecto mais escuro.
+                            </div>
+                            <div class="message-time">10:38</div>
+                        </div>
+                    </div>
+                    
+                    <div class="message incoming">
+                        <div class="message-avatar"></div>
+                        <div class="message-content">
+                            <div class="message-text">
+                                Se você prefere manter boa luminosidade com excelente controle térmico, a DualReflect seria o equilíbrio perfeito, com redução de 65% do calor e manutenção da claridade.
+                            </div>
+                            <div class="message-file">
+                                <div class="file-icon"></div>
+                                <div class="file-info">
+                                    <div class="file-name">Comparativo_Winf_Select.pdf</div>
+                                    <div class="file-size">2.4 MB</div>
+                                </div>
+                            </div>
+                            <div class="message-time">10:39</div>
+                        </div>
+                    </div>
+                    
+                    <div class="message outgoing">
+                        <div class="message-avatar"></div>
+                        <div class="message-content">
+                            <div class="message-text">
+                                A DualReflect parece perfeita! Como faço para ver como ficaria no meu apartamento?
+                            </div>
+                            <div class="message-time">10:41</div>
+                        </div>
+                    </div>
+                    
+                    <div class="message incoming">
+                        <div class="message-avatar"></div>
+                        <div class="message-content">
+                            <div class="message-text">
+                                Ótima escolha! Temos duas opções para você visualizar o resultado:
+                            </div>
+                            <div class="message-text">
+                                1. Você pode usar nosso <strong>Simulador Imersivo 3D</strong> diretamente no site, onde é possível visualizar diferentes ambientes com nossas películas aplicadas.
+                            </div>
+                            <div class="message-text">
+                                2. Posso agendar uma visita de um de nossos consultores licenciados para fazer uma demonstração presencial com amostras reais.
+                            </div>
+                            <div class="message-time">10:43</div>
+                        </div>
+                    </div>
+                    
+                    <div class="message incoming">
+                        <div class="message-avatar"></div>
+                        <div class="message-content">
+                            <div class="message-text">
+                                O que você prefere?
+                            </div>
+                            <div class="typing-indicator">
+                                <div class="typing-dot"></div>
+                                <div class="typing-dot"></div>
+                                <div class="typing-dot"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input">
+                    <div class="input-container">
+                        <button class="attachment-button">
+                            <div class="attachment-icon"></div>
+                        </button>
+                        <input type="text" class="message-input" placeholder="Digite uma mensagem...">
+                        <button class="send-button">
+                            <div class="send-icon"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Capabilities Panel -->
+            <div class="capabilities-panel">
+                <div class="panel-header">
+                    <h2 class="panel-title">Recursos do Assistente</h2>
+                    <p class="panel-description">Conheça as capacidades do Winf Concierge</p>
+                </div>
+                
+                <div class="capabilities-list">
+                    <div class="capability-group">
+                        <h3 class="group-title">Assistência Premium</h3>
+                        <div class="capability-item">
+                            <div class="capability-icon">
+                                <div class="capability-icon-inner"></div>
+                            </div>
+                            <div class="capability-content">
+                                <div class="capability-title">Consultoria Personalizada</div>
+                                <div class="capability-description">Recomendações baseadas nas suas necessidades específicas</div>
+                            </div>
+                        </div>
+                        <div class="capability-item">
+                            <div class="capability-icon">
+                                <div class="capability-icon-inner"></div>
+                            </div>
+                            <div class="capability-content">
+                                <div class="capability-title">Agendamento VIP</div>
+                                <div class="capability-description">Marque visitas e demonstrações com prioridade</div>
+                            </div>
+                        </div>
+                        <div class="capability-item">
+                            <div class="capability-icon">
+                                <div class="capability-icon-inner"></div>
+                            </div>
+                            <div class="capability-content">
+                                <div class="capability-title">Acesso Exclusivo</div>
+                                <div class="capability-description">Informações sobre lançamentos e produtos especiais</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="capability-group">
+                        <h3 class="group-title">Recursos Multimodais</h3>
+                        <div class="capability-item">
+                            <div class="capability-icon">
+                                <div class="capability-icon-inner"></div>
+                            </div>
+                            <div class="capability-content">
+                                <div class="capability-title">Análise de Imagens</div>
+                                <div class="capability-description">Envie fotos do seu ambiente para recomendações precisas</div>
+                            </div>
+                        </div>
+                        <div class="capability-item">
+                            <div class="capability-icon">
+                                <div class="capability-icon-inner"></div>
+                            </div>
+                            <div class="capability-content">
+                                <div class="capability-title">Compartilhamento de Arquivos</div>
+                                <div class="capability-description">Receba catálogos, especificações e orçamentos</div>
+                            </div>
+                        </div>
+                        <div class="capability-item">
+                            <div class="capability-icon">
+                                <div class="capability-icon-inner"></div>
+                            </div>
+                            <div class="capability-content">
+                                <div class="capability-title">Simulações Visuais</div>
+                                <div class="capability-description">Visualize o antes e depois com nossas películas</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="capability-group">
+                        <h3 class="group-title">Integrações</h3>
+                        <div class="capability-item">
+                            <div class="capability-icon">
+                                <div class="capability-icon-inner"></div>
+                            </div>
+                            <div class="capability-content">
+                                <div class="capability-title">Simulador 3D</div>
+                                <div class="capability-description">Acesso direto ao simulador imersivo Winf</div>
+                            </div>
+                        </div>
+                        <div class="capability-item">
+                            <div class="capability-icon">
+                                <div class="capability-icon-inner"></div>
+                            </div>
+                            <div class="capability-content">
+                                <div class="capability-title">E-commerce Premium</div>
+                                <div class="capability-description">Compre diretamente pelo chat com acesso VIP</div>
+                            </div>
+                        </div>
+                        <div class="capability-item">
+                            <div class="capability-icon">
+                                <div class="capability-icon-inner"></div>
+                            </div>
+                            <div class="capability-content">
+                                <div class="capability-title">Área de Membros</div>
+                                <div class="capability-description">Acesse seu perfil e histórico de interações</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="panel-footer">
+                    <button class="integration-button">
+                        <div class="button-icon"></div>
+                        <span>Conectar ao Simulador 3D</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

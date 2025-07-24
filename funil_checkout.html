@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funil de Checkout | Winf™</title>
+    <style>
+        :root {
+            --color-black: #0D0D0D;
+            --color-white: #FFFFFF;
+            --color-accent: #AAFF00;
+            --color-secondary: #00FFFF;
+            --color-tertiary: #FF00FF;
+            --font-family: 'Inter', sans-serif;
+            --spacing-unit: 8px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-black);
+            color: var(--color-white);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: calc(var(--spacing-unit) * 4);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: calc(var(--spacing-unit) * 3) 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: calc(var(--spacing-unit) * 6);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-white);
+            text-decoration: none;
+        }
+
+        .progress-container {
+            margin-bottom: calc(var(--spacing-unit) * 6);
+        }
+
+        .progress-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .progress-label {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .progress-percentage {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-accent);
+        }
+
+        .progress-bar {
+            height: 4px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            width: 100%;
+            background-color: var(--color-accent);
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: calc(var(--spacing-unit) * 2);
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 25%;
+        }
+
+        .step-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-bottom: calc(var(--spacing-unit));
+        }
+
+        .step-active .step-indicator {
+            background-color: var(--color-accent);
+        }
+
+        .step-completed .step-indicator {
+            background-color: rgba(170, 255, 0, 0.5);
+        }
+
+        .step-pending .step-indicator {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .step-label {
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .step-active .step-label {
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        .step-completed .step-label {
+            opacity: 0.7;
+        }
+
+        .step-pending .step-label {
+            opacity: 0.5;
+        }
+
+        .content-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: calc(var(--spacing-unit) * 6);
+        }
+
+        @media (min-width: 768px) {
+            .content-container {
+                grid-template-columns: 2fr 1fr;
+            }
+        }
+
+        .main-content {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: calc(var(--spacing-unit) * 4);
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .checkout-header {
+            text-align: center;
+            margin-bottom: calc(var(--spacing-unit) * 6);
+        }
+
+        .checkout-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            background: linear-gradient(to right, var(--color-accent), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .checkout-subtitle {
+            font-size: 18px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .checkout-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: calc(var(--spacing-unit) * 4);
+        }
+
+        .checkout-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 33.33%;
+        }
+
+        .checkout-step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-bottom: calc(var(--spacing-unit));
+        }
+
+        .checkout-step.active .checkout-step-number {
+            background-color: var(--color-accent);
+            color: var(--color-black);
+        }
+
+        .checkout-step.completed .checkout-step-number {
+            background-color: rgba(170, 255, 0, 0.5);
+        }
+
+        .checkout-step-label {
+            font-size: 14px;
+            text-align: center;
+        }
+
+        .checkout-step.active .checkout-step-label {
+            color: var(--color-accent);
+            font-weight: 600;
+        }
+
+        .checkout-step.completed .checkout-step-label {
+            opacity: 0.7;
+        }
+
+        .checkout-section {
+            margin-bottom: calc(var(--spacing-unit) * 6);
+        }
+
+        .form-group {
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: calc(var(--spacing-unit));
+        }
+
+        .form-input {
+            width: 100%;
+            padding: calc(var(--spacing-unit) * 1.5);
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: var(--color-white);
+            font-family: var(--font-family);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-accent);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: calc(var(--spacing-unit) * 1.5);
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: var(--color-white);
+            font-family: var(--font-family);
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M2.5 4.5L6 8L9.5 4.5' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right calc(var(--spacing-unit) * 1.5) center;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: calc(var(--spacing-unit) * 3);
+        }
+
+        @media (min-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .form-row-3 {
+                grid-template-columns: 2fr 1fr 1fr;
+            }
+        }
+
+        .form-hint {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: calc(var(--spacing-unit) * 0.5);
+        }
+
+        .form-error {
+            font-size: 12px;
+            color: var(--color-tertiary);
+            margin-top: calc(var(--spacing-unit) * 0.5);
+        }
+
+        .payment-methods {
+            display: flex;
+            gap: calc(var(--spacing-unit) * 2);
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .payment-method {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: calc(var(--spacing-unit) * 2);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .payment-method:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .payment-method.active {
+            border-color: var(--color-accent);
+            background-color: rgba(170, 255, 0, 0.05);
+        }
+
+        .payment-method-icon {
+            width: 48px;
+            height: 32px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 0 auto calc(var(--spacing-unit));
+            border-radius: 4px;
+        }
+
+        .payment-method-name {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .card-icon {
+            display: flex;
+            gap: calc(var(--spacing-unit));
+            margin-top: calc(var(--spacing-unit));
+        }
+
+        .card-type {
+            width: 32px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+        }
+
+        .credit-card-form {
+            margin-top: calc(var(--spacing-unit) * 3);
+        }
+
+        .installments-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: calc(var(--spacing-unit) * 2);
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .installment-option {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: calc(var(--spacing-unit) * 2);
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .installment-option:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .installment-option.active {
+            border-color: var(--color-accent);
+            background-color: rgba(170, 255, 0, 0.05);
+        }
+
+        .installment-number {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: calc(var(--spacing-unit) * 0.5);
+        }
+
+        .installment-value {
+            font-size: 14px;
+        }
+
+        .installment-total {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: calc(var(--spacing-unit) * 0.5);
+        }
+
+        .form-checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: calc(var(--spacing-unit) * 1.5);
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .form-checkbox {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .form-checkbox:checked {
+            background-color: var(--color-accent);
+        }
+
+        .form-checkbox:checked::after {
+            content: '';
+            position: absolute;
+            top: 4px;
+            left: 7px;
+            width: 6px;
+            height: 10px;
+            border: solid var(--color-black);
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+
+        .form-checkbox-label {
+            font-size: 14px;
+        }
+
+        .summary-section {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: calc(var(--spacing-unit) * 3);
+            margin-bottom: calc(var(--spacing-unit) * 4);
+        }
+
+        .summary-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .summary-list {
+            list-style: none;
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: calc(var(--spacing-unit)) 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .summary-label {
+            font-size: 14px;
+        }
+
+        .summary-value {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .summary-total {
+            display: flex;
+            justify-content: space-between;
+            padding-top: calc(var(--spacing-unit) * 2);
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .total-label {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .total-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--color-accent);
+        }
+
+        .btn {
+            padding: calc(var(--spacing-unit) * 1.5) calc(var(--spacing-unit) * 3);
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-unit);
+            transition: all 0.2s ease;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .btn-primary {
+            background-color: var(--color-accent);
+            color: var(--color-black);
+        }
+
+        .btn-primary:hover {
+            background-color: rgba(170, 255, 0, 0.8);
+        }
+
+        .btn-secondary {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: var(--color-white);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: calc(var(--spacing-unit) * 4);
+            gap: calc(var(--spacing-unit) * 2);
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--spacing-unit) * 4);
+        }
+
+        .sidebar-card {
+            background-color: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            padding: calc(var(--spacing-unit) * 3);
+        }
+
+        .sidebar-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .order-summary {
+            margin-bottom: calc(var(--spacing-unit) * 3);
+        }
+
+        .product-item {
+            display: flex;
+            align-items: flex-start;
+            gap: calc(var(--spacing-unit) * 2);
+            padding: calc(var(--spacing-unit) * 2) 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .product-item:last-child {
+            border-bottom: none;
+        }
+
+        .product-image {
+            width: 64px;
+            height: 64px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            flex-shrink: 0;
+        }
+
+        .product-details {
+            flex-grow: 1;
+        }
+
+        .product-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: calc(var(--spacing-unit) * 0.5);
+        }
+
+        .product-variant {
+            font-size: 14px;
+            opacity: 0.7;
+            margin-bottom: calc(var(--spacing-unit) * 0.5);
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .info-list {
+            list-style: none;
+        }
+
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: calc(var(--spacing-unit)) 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .help-text {
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+
+        .help-contact {
+            display: flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 2);
+            padding: calc(var(--spacing-unit) * 2);
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 4px;
+        }
+
+        .contact-icon {
+            width: 32px;
+            height: 32px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .contact-info {
+            flex-grow: 1;
+        }
+
+        .contact-label {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+
+        .contact-value {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .security-badges {
+            display: flex;
+            justify-content: space-between;
+            margin-top: calc(var(--spacing-unit) * 2);
+        }
+
+        .security-badge {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+
+        .winfcoin-option {
+            display: flex;
+            align-items: center;
+            gap: calc(var(--spacing-unit) * 2);
+            padding: calc(var(--spacing-unit) * 2);
+            background-color: rgba(170, 255, 0, 0.05);
+            border: 1px solid rgba(170, 255, 0, 0.2);
+            border-radius: 4px;
+            margin-top: calc(var(--spacing-unit) * 2);
+        }
+
+        .winfcoin-icon {
+            width: 32px;
+            height: 32px;
+            background-color: rgba(170, 255, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .winfcoin-details {
+            flex-grow: 1;
+        }
+
+        .winfcoin-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: calc(var(--spacing-unit) * 0.5);
+        }
+
+        .winfcoin-balance {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .winfcoin-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-accent);
+        }
+
+        @media (max-width: 768px) {
+            .form-actions {
+                flex-direction: column;
+            }
+
+            .payment-methods {
+                flex-direction: column;
+            }
+
+            .installments-options {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .success-message {
+            text-align: center;
+            padding: calc(var(--spacing-unit) * 6) 0;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(170, 255, 0, 0.1);
+            border-radius: 50%;
+            margin: 0 auto calc(var(--spacing-unit) * 4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .success-icon::after {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: 30px;
+            width: 20px;
+            height: 32px;
+            border: solid var(--color-accent);
+            border-width: 0 4px 4px 0;
+            transform: rotate(45deg);
+        }
+
+        .success-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            background: linear-gradient(to right, var(--color-accent), var(--color-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .success-subtitle {
+            font-size: 18px;
+            opacity: 0.8;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: calc(var(--spacing-unit) * 4);
+        }
+
+        .order-details {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: calc(var(--spacing-unit) * 3);
+            max-width: 600px;
+            margin: 0 auto calc(var(--spacing-unit) * 4);
+        }
+
+        .order-number {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+            padding-bottom: calc(var(--spacing-unit) * 2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .order-number span {
+            font-family: monospace;
+            color: var(--color-accent);
+        }
+
+        .next-steps {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: calc(var(--spacing-unit) * 3);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .next-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .next-step-card {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: calc(var(--spacing-unit) * 3);
+            text-align: center;
+        }
+
+        .next-step-icon {
+            width: 48px;
+            height: 48px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            margin: 0 auto calc(var(--spacing-unit) * 2);
+        }
+
+        .next-step-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: calc(var(--spacing-unit));
+        }
+
+        .next-step-description {
+            font-size: 14px;
+            opacity: 0.8;
+            margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <a href="#" class="logo">WINF™</a>
+        </header>
+
+        <div class="progress-container">
+            <div class="progress-title">
+                <div class="progress-label">Progresso do Funil</div>
+                <div class="progress-percentage">100%</div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <div class="progress-steps">
+                <div class="step step-completed">
+                    <div class="step-indicator"></div>
+                    <div class="step-label">Qualificação</div>
+                </div>
+                <div class="step step-completed">
+                    <div class="step-indicator"></div>
+                    <div class="step-label">Apresentação</div>
+                </div>
+                <div class="step step-completed">
+                    <div class="step-indicator"></div>
+                    <div class="step-label">Oferta</div>
+                </div>
+                <div class="step step-active">
+                    <div class="step-indicator"></div>
+                    <div class="step-label">Checkout</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-container">
+            <main class="main-content">
+                <div class="checkout-header">
+                    <h1 class="checkout-title">Finalizar Pedido</h1>
+                    <p class="checkout-subtitle">Você está a poucos passos de revolucionar seu desempenho com o AeroCore™ Pro Elite.</p>
+                </div>
+                
+                <div class="checkout-steps">
+                    <div class="checkout-step completed">
+                        <div class="checkout-step-number">1</div>
+                        <div class="checkout-step-label">Informações</div>
+                    </div>
+                    <div class="checkout-step active">
+                        <div class="checkout-step-number">2</div>
+                        <div class="checkout-step-label">Pagamento</div>
+                    </div>
+                    <div class="checkout-step">
+                        <div class="checkout-step-number">3</div>
+                        <div class="checkout-step-label">Confirmação</div>
+                    </div>
+                </div>
+                
+                <div class="checkout-section">
+                    <h2 class="section-title">Método de Pagamento</h2>
+                    
+                    <div class="payment-methods">
+                        <div class="payment-method active">
+                            <div class="payment-method-icon"></div>
+                            <div class="payment-method-name">Cartão de Crédito</div>
+                            <div class="card-icon">
+                                <div class="card-type"></div>
+                                <div class="card-type"></div>
+                                <div class="card-type"></div>
+                            </div>
+                        </div>
+                        <div class="payment-method">
+                            <div class="payment-method-icon"></div>
+                            <div class="payment-method-name">Boleto Bancário</div>
+                        </div>
+                        <div class="payment-method">
+                            <div class="payment-method-icon"></div>
+                            <div class="payment-method-name">Pix</div>
+                        </div>
+                    </div>
+                    
+                    <div class="credit-card-form">
+                        <div class="form-group">
+                            <label class="form-label">Número do Cartão</label>
+                            <input type="text" class="form-input" placeholder="0000 0000 0000 0000">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label">Nome no Cartão</label>
+                                <input type="text" class="form-input" placeholder="Como aparece no cartão">
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label class="form-label">Validade</label>
+                                    <input type="text" class="form-input" placeholder="MM/AA">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">CVV</label>
+                                    <input type="text" class="form-input" placeholder="123">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Parcelamento</label>
+                            <div class="installments-options">
+                                <div class="installment-option">
+                                    <div class="installment-number">1x</div>
+                                    <div class="installment-value">R$ 26.982,00</div>
+                                    <div class="installment-total">sem juros</div>
+                                </div>
+                                <div class="installment-option active">
+                                    <div class="installment-number">6x</div>
+                                    <div class="installment-value">R$ 4.497,00</div>
+                                    <div class="installment-total">sem juros</div>
+                                </div>
+                                <div class="installment-option">
+                                    <div class="installment-number">12x</div>
+                                    <div class="installment-value">R$ 2.248,50</div>
+                                    <div class="installment-total">sem juros</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="form-checkbox-group">
+                                <input type="checkbox" class="form-checkbox" id="save-card" checked>
+                                <label for="save-card" class="form-checkbox-label">Salvar cartão para compras futuras</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="checkout-section">
+                    <h2 class="section-title">Endereço de Cobrança</h2>
+                    
+                    <div class="form-group">
+                        <div class="form-checkbox-group">
+                            <input type="checkbox" class="form-checkbox" id="same-address" checked>
+                            <label for="same-address" class="form-checkbox-label">Mesmo endereço de entrega</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">CEP</label>
+                            <input type="text" class="form-input" placeholder="00000-000" value="01310-200">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Estado</label>
+                            <select class="form-select">
+                                <option>Selecione</option>
+                                <option selected>SP</option>
+                                <option>RJ</option>
+                                <option>MG</option>
+                                <option>RS</option>
+                                <option>PR</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Cidade</label>
+                            <input type="text" class="form-input" value="São Paulo">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Bairro</label>
+                            <input type="text" class="form-input" value="Bela Vista">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Endereço</label>
+                            <input type="text" class="form-input" value="Avenida Paulista">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Número</label>
+                            <input type="text" class="form-input" value="1578">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Complemento</label>
+                        <input type="text" class="form-input" value="Conjunto 512">
+                    </div>
+                </div>
+                
+                <div class="checkout-section">
+                    <h2 class="section-title">Cupom de Desconto</h2>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <input type="text" class="form-input" placeholder="Digite seu cupom" value="WINF10PREMIUM">
+                        </div>
+                        
+                        <div class="form-group">
+                            <button class="btn btn-secondary">Aplicar</button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-hint" style="color: var(--color-accent);">Cupom aplicado: 10% de desconto</div>
+                </div>
+                
+                <div class="checkout-section">
+                    <h2 class="section-title">Usar WinfCoins</h2>
+                    
+                    <div class="winfcoin-option">
+                        <div class="winfcoin-icon">W</div>
+                        <div class="winfcoin-details">
+                            <div class="winfcoin-title">Usar 500 WinfCoins</div>
+                            <div class="winfcoin-balance">Saldo disponível: 1.250 WinfCoins</div>
+                        </div>
+                        <div class="winfcoin-value">- R$ 500,00</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="form-checkbox-group">
+                            <input type="checkbox" class="form-checkbox" id="use-winfcoins" checked>
+                            <label for="use-winfcoins" class="form-checkbox-label">Usar WinfCoins nesta compra</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="summary-section">
+                    <h2 class="summary-title">Resumo do Pedido</h2>
+                    <ul class="summary-list">
+                        <li class="summary-item">
+                            <span class="summary-label">Pacote Profissional</span>
+                            <span class="summary-value">R$ 24.990,00</span>
+                        </li>
+                        <li class="summary-item">
+                            <span class="summary-label">NeoSkin™ ADV-X</span>
+                            <span class="summary-value">R$ 4.990,00</span>
+                        </li>
+                        <li class="summary-item">
+                            <span class="summary-label">Desconto (10%)</span>
+                            <span class="summary-value">- R$ 2.998,00</span>
+                        </li>
+                        <li class="summary-item">
+                            <span class="summary-label">WinfCoins</span>
+                            <span class="summary-value">- R$ 500,00</span>
+                        </li>
+                        <li class="summary-item">
+                            <span class="summary-label">Frete</span>
+                            <span class="summary-value">Grátis</span>
+                        </li>
+                    </ul>
+                    <div class="summary-total">
+                        <span class="total-label">Total</span>
+                        <span class="total-value">R$ 26.482,00</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <div class="form-checkbox-group">
+                        <input type="checkbox" class="form-checkbox" id="terms" checked>
+                        <label for="terms" class="form-checkbox-label">Li e concordo com os <a href="#" style="color: var(--color-accent);">Termos e Condições</a> e <a href="#" style="color: var(--color-accent);">Política de Privacidade</a></label>
+                    </div>
+                </div>
+                
+                <div class="form-actions">
+                    <button class="btn btn-secondary">Voltar para Oferta</button>
+                    <button class="btn btn-primary">Finalizar Compra</button>
+                </div>
+                
+                <!-- Success Message (Hidden by default, show after payment) -->
+                <div class="success-message" style="display: none;">
+                    <div class="success-icon"></div>
+                    <h2 class="success-title">Pedido Confirmado!</h2>
+                    <p class="success-subtitle">Seu pedido foi processado com sucesso. Preparamos um pacote de boas-vindas exclusivo para você começar sua jornada com o AeroCore™.</p>
+                    
+                    <div class="order-details">
+                        <div class="order-number">Pedido: <span>#WNF25052025</span></div>
+                        <ul class="info-list">
+                            <li class="info-item">
+                                <span class="info-label">Status</span>
+                                <span class="info-value">Pagamento Aprovado</span>
+                            </li>
+                            <li class="info-item">
+                                <span class="info-label">Data</span>
+                                <span class="info-value">25/05/2025</span>
+                            </li>
+                            <li class="info-item">
+                                <span class="info-label">Previsão de Entrega</span>
+                                <span class="info-value">30/05/2025</span>
+                            </li>
+                            <li class="info-item">
+                                <span class="info-label">WinfCoins Ganhos</span>
+                                <span class="info-value">+2.648</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="next-steps">
+                        <div class="next-step-card">
+                            <div class="next-step-icon"></div>
+                            <h3 class="next-step-title">Acessar Área de Membros</h3>
+                            <p class="next-step-description">Acesse sua área exclusiva para começar sua jornada com o AeroCore™.</p>
+                            <button class="btn btn-primary">Área de Membros</button>
+                        </div>
+                        
+                        <div class="next-step-card">
+                            <div class="next-step-icon"></div>
+                            <h3 class="next-step-title">Acompanhar Pedido</h3>
+                            <p class="next-step-description">Acompanhe o status do seu pedido em tempo real.</p>
+                            <button class="btn btn-secondary">Rastrear Pedido</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <aside class="sidebar">
+                <div class="sidebar-card">
+                    <h2 class="sidebar-title">Resumo do Pedido</h2>
+                    <div class="order-summary">
+                        <div class="product-item">
+                            <div class="product-image"></div>
+                            <div class="product-details">
+                                <div class="product-name">AeroCore™ Pro Elite</div>
+                                <div class="product-variant">Edição Profissional</div>
+                                <div class="product-price">R$ 24.990,00</div>
+                            </div>
+                        </div>
+                        <div class="product-item">
+                            <div class="product-image"></div>
+                            <div class="product-details">
+                                <div class="product-name">NeoSkin™ ADV-X</div>
+                                <div class="product-variant">Revestimento Premium</div>
+                                <div class="product-price">R$ 4.990,00</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <ul class="info-list">
+                        <li class="info-item">
+                            <span class="info-label">Subtotal</span>
+                            <span class="info-value">R$ 29.980,00</span>
+                        </li>
+                        <li class="info-item">
+                            <span class="info-label">Desconto</span>
+                            <span class="info-value">- R$ 2.998,00</span>
+                        </li>
+                        <li class="info-item">
+                            <span class="info-label">WinfCoins</span>
+                            <span class="info-value">- R$ 500,00</span>
+                        </li>
+                        <li class="info-item">
+                            <span class="info-label">Frete</span>
+                            <span class="info-value">Grátis</span>
+                        </li>
+                        <li class="info-item">
+                            <span class="info-label">Total</span>
+                            <span class="info-value" style="color: var(--color-accent); font-size: 18px;">R$ 26.482,00</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <h2 class="sidebar-title">Entrega Premium</h2>
+                    <ul class="info-list">
+                        <li class="info-item">
+                            <span class="info-label">Método</span>
+                            <span class="info-value">Entrega Expressa</span>
+                        </li>
+                        <li class="info-item">
+                            <span class="info-label">Prazo</span>
+                            <span class="info-value">3-5 dias úteis</span>
+                        </li>
+                        <li class="info-item">
+                            <span class="info-label">Endereço</span>
+                            <span class="info-value">São Paulo, SP</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <h2 class="sidebar-title">Pagamento Seguro</h2>
+                    <p class="help-text">
+                        Todas as transações são protegidas com criptografia de ponta a ponta e processadas em ambiente seguro.
+                    </p>
+                    <div class="security-badges">
+                        <div class="security-badge"></div>
+                        <div class="security-badge"></div>
+                        <div class="security-badge"></div>
+                    </div>
+                </div>
+
+                <div class="sidebar-card">
+                    <h2 class="sidebar-title">Precisa de Ajuda?</h2>
+                    <p class="help-text">
+                        Nossa equipe de suporte premium está disponível para auxiliá-lo durante todo o processo de compra.
+                    </p>
+                    <div class="help-contact">
+                        <div class="contact-icon"></div>
+                        <div class="contact-info">
+                            <div class="contact-label">Suporte Premium</div>
+                            <div class="contact-value">suporte@winf.ai</div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</body>
+</html>

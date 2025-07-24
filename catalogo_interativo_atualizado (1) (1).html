@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo Interativo Winf Premium</title>
+    <style>
+        :root {
+            /* Cores principais - preto e branco apenas */
+            --premium-black: #000000;
+            --premium-dark: #121212;
+            --premium-gray: #1E1E1E;
+            --premium-light: #FFFFFF;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: var(--premium-black);
+            color: white;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0;
+            overflow: hidden;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            color: white;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            opacity: 1;
+        }
+        
+        .nav-links a.active {
+            opacity: 1;
+            position: relative;
+        }
+        
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: white;
+        }
+        
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+        
+        .toggle-track {
+            width: 50px;
+            height: 24px;
+            background-color: var(--premium-gray);
+            border-radius: 12px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-thumb {
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .theme-toggle.dark .toggle-track {
+            background-color: white;
+        }
+        
+        .theme-toggle.dark .toggle-thumb {
+            left: 28px;
+            background-color: var(--premium-black);
+        }
+        
+        .theme-label {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* Main Content Styles */
+        .main-content {
+            display: flex;
+            min-height: calc(100vh - 81px);
+        }
+        
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background-color: var(--premium-black);
+            padding: 30px 20px;
+            border-right: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .sidebar-section {
+            margin-bottom: 30px;
+        }
+        
+        .sidebar-title {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: rgba(255,255,255,0.5);
+            margin-bottom: 15px;
+            padding-left: 10px;
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-radius: 4px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .sidebar-menu a:hover {
+            background-color: rgba(255,255,255,0.05);
+        }
+        
+        .sidebar-menu a.active {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .sidebar-menu .icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.7;
+        }
+        
+        .sidebar-menu a.active .icon {
+            opacity: 1;
+        }
+        
+        .category-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+        
+        .badge-mobile, .badge-air, .badge-marine, .badge-neoskin {
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        /* Catalog Content Styles */
+        .catalog-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+        
+        .catalog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .catalog-title {
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+        
+        .view-options {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .view-button {
+            background-color: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 4px;
+            padding: 8px 15px;
+            color: white;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .view-button:hover {
+            background-color: rgba(255,255,255,0.05);
+        }
+        
+        .view-button.active {
+            background-color: white;
+            color: black;
+            font-weight: 500;
+            border: 1px solid white;
+        }
+        
+        .product-showcase {
+            display: flex;
+            height: calc(100vh - 200px);
+            margin-bottom: 30px;
+        }
+        
+        .product-viewer {
+            flex: 2;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: var(--premium-gray);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-controls {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            background-color: rgba(0,0,0,0.7);
+            padding: 10px 20px;
+            border-radius: 30px;
+        }
+        
+        .control-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255,255,255,0.1);
+            border: none;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .control-button:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+        
+        .product-info {
+            flex: 1;
+            padding: 0 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .product-category {
+            font-size: 14px;
+            color: white;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .product-name {
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: 0.05em;
+        }
+        
+        .product-description {
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.8;
+            margin-bottom: 30px;
+        }
+        
+        .product-specs {
+            margin-bottom: 30px;
+        }
+        
+        .specs-title {
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 15px;
+            letter-spacing: 0.05em;
+        }
+        
+        .specs-list {
+            list-style: none;
+        }
+        
+        .specs-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        
+        .specs-item:last-child {
+            border-bottom: none;
+        }
+        
+        .specs-label {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        .specs-value {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .product-actions {
+            margin-top: auto;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .action-button {
+            flex: 1;
+            padding: 12px 0;
+            border-radius: 4px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .action-button.primary {
+            background-color: white;
+            color: black;
+            border: none;
+        }
+        
+        .action-button.secondary {
+            background-color: transparent;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+        }
+        
+        .action-button:hover {
+            opacity: 0.9;
+        }
+        
+        /* HUD Overlay */
+        .hud-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .hud-element {
+            position: absolute;
+            background-color: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            padding: 8px 12px;
+            font-size: 12px;
+            color: white;
+            backdrop-filter: blur(4px);
+        }
+        
+        .hud-element.top-left {
+            top: 20px;
+            left: 20px;
+        }
+        
+        .hud-element.top-right {
+            top: 20px;
+            right: 20px;
+        }
+        
+        .hud-element.bottom-left {
+            bottom: 80px;
+            left: 20px;
+        }
+        
+        .hud-element.bottom-right {
+            bottom: 80px;
+            right: 20px;
+        }
+        
+        .hud-element.center-left {
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+        }
+        
+        .hud-element.center-right {
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+        }
+        
+        /* Related Products */
+        .related-products {
+            margin-top: 30px;
+        }
+        
+        .related-title {
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 20px;
+            letter-spacing: 0.05em;
+        }
+        
+        .related-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        
+        .related-card {
+            background-color: var(--premium-black);
+            border: 1px solid rgba(255,255,255,0.05);
+            border-radius: 8px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .related-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            border-color: rgba(255,255,255,0.2);
+        }
+        
+        .related-image {
+            height: 150px;
+            overflow: hidden;
+        }
+        
+        .related-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .related-card:hover .related-image img {
+            transform: scale(1.05);
+        }
+        
+        .related-content {
+            padding: 15px;
+        }
+        
+        .related-category {
+            font-size: 12px;
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        .related-name {
+            font-size: 16px;
+            font-weight: 300;
+            margin-bottom: 10px;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .product-info {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .hud-element {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .hud-element:nth-child(1) { animation-delay: 0.1s; }
+        .hud-element:nth-child(2) { animation-delay: 0.2s; }
+        .hud-element:nth-child(3) { animation-delay: 0.3s; }
+        .hud-element:nth-child(4) { animation-delay: 0.4s; }
+        .hud-element:nth-child(5) { animation-delay: 0.5s; }
+        .hud-element:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* Custom Cursor */
+        body {
+            cursor: default;
+        }
+        
+        a, button, .related-card {
+            cursor: pointer;
+        }
+        
+        /* Scroll Indicator */
+        .scroll-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background-color: white;
+            z-index: 1000;
+            width: 0%;
+            transition: width 0.1s ease;
+        }
+        
+        /* Preloader */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--premium-black);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+        
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .preloader-logo {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+        
+        .preloader-circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 2px solid rgba(255,255,255,0.1);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .preloader-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 18px;
+            font-weight: 300;
+            letter-spacing: 0.1em;
+            color: white;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="preloader-logo">
+            <div class="preloader-circle"></div>
+            <div class="preloader-text">WINF</div>
+        </div>
+    </div>
+    
+    <!-- Scroll Indicator -->
+    <div class="scroll-indicator"></div>
+    
+    <header>
+        <div class="logo">
+            <img src="placeholder-logo.png" alt="Winf Logo">
+            <h1>CATÁLOGO WINF</h1>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="active">Produtos</a>
+            <a href="#">Tecnologias</a>
+            <a href="#">Aplicações</a>
+            <a href="#">Suporte</a>
+        </div>
+        <div class="theme-toggle dark">
+            <div class="toggle-track">
+                <div class="toggle-thumb"></div>
+            </div>
+            <span class="theme-label">Modo Escuro</span>
+        </div>
+    </header>
+    
+    <div class="main-content">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Categorias</h3>
+                <ul class="sidebar-menu">
+                    <li>
+                        <a href="#" class="active">
+                            <span class="icon">🏠</span>
+                            Todos os Produtos
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon">🚗</span>
+                            MOBILE
+                            <span class="category-badge badge-mobile">12</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon">✈️</span>
+                            AIR
+                            <span class="category-badge badge-air">8</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon">🚢</span>
+                            MARINE
+                            <span class="category-badge badge-marine">6</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon">🏢</span>
+                            GLASS + HOME
+                            <span class="category-badge">10</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon">🛡️</span>
+                            NEOSKIN
+                            <span class="category-badge badge-neoskin">4</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Tecnologias</h3>
+                <ul class="sidebar-menu">
+                    <li>
+                        <a href="#">
+                            <span class="icon">🔬</span>
+                            NanoCarbon
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon">🧪</span>
+                            NanoCeramic
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon">🔍</span>
+                            MetalFusion
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon">🛡️</span>
+                            Shield-S
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3 class="sidebar-title">Recursos</h3>
+                <ul class="sidebar-menu">
+                    <li>
+                        <a href="#">
+                            <span class="icon">📊</span>
+                            Comparativo
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon">📋</span>
+                            Fichas Técnicas
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon">📱</span>
+                            Aplicativo
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span class="icon">📞</span>
+                            Contato
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+        
+        <main class="catalog-content">
+            <div class="catalog-header">
+                <h2 class="catalog-title">PhantomStrike - AeroCore™ MOBILE</h2>
+                <div class="view-options">
+                    <button class="view-button">
+                        <span>📊</span> Especificações
+                    </button>
+                    <button class="view-button active">
+                        <span>🔍</span> Visualização 3D
+                    </button>
+                    <button class="view-button">
+                        <span>📱</span> Aplicações
+                    </button>
+                </div>
+            </div>
+            
+            <div class="product-showcase">
+                <div class="product-viewer">
+                    <img src="placeholder-product.jpg" alt="PhantomStrike" class="product-image">
+                    
+                    <div class="hud-overlay">
+                        <div class="hud-element top-left">Absorção UV: 99.9%</div>
+                        <div class="hud-element top-right">Rejeição IR: 95%</div>
+                        <div class="hud-element center-left">Estrutura NanoCarbon</div>
+                        <div class="hud-element center-right">Espessura: 2 mil</div>
+                        <div class="hud-element bottom-left">Garantia: 10 anos</div>
+                        <div class="hud-element bottom-right">Redução de calor: 80%</div>
+                    </div>
+                    
+                    <div class="product-controls">
+                        <button class="control-button">⟲</button>
+                        <button class="control-button">-</button>
+                        <button class="control-button">+</button>
+                        <button class="control-button">⟳</button>
+                    </div>
+                </div>
+                
+                <div class="product-info">
+                    <div class="product-category">MOBILE • NANOCARBON</div>
+                    <h3 class="product-name">PhantomStrike</h3>
+                    <p class="product-description">Inspirada nas superfícies absorventes de radar dos caças furtivos, a PhantomStrike oferece elegância técnica com performance térmica absoluta. Ideal para veículos de alto desempenho que exigem o máximo em proteção solar e estética refinada.</p>
+                    
+                    <div class="product-specs">
+                        <h4 class="specs-title">Especificações Técnicas</h4>
+                        <ul class="specs-list">
+                            <li class="specs-item">
+                                <span class="specs-label">Rejeição Total de Energia Solar</span>
+                                <span class="specs-value">97%</span>
+                            </li>
+                            <li class="specs-item">
+                                <span class="specs-label">Rejeição de Infravermelho</span>
+                                <span class="specs-value">95%</span>
+                            </li>
+                            <li class="specs-item">
+                                <span class="specs-label">Bloqueio UV</span>
+                                <span class="specs-value">99.9%</span>
+                            </li>
+                            <li class="specs-item">
+                                <span class="specs-label">Redução de Ofuscamento</span>
+                                <span class="specs-value">94%</span>
+                            </li>
+                            <li class="specs-item">
+                                <span class="specs-label">Transmissão de Luz Visível</span>
+                                <span class="specs-value">5%</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="product-actions">
+                        <div class="action-button secondary">Ficha Técnica</div>
+                        <div class="action-button primary">Solicitar Amostra</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="related-products">
+                <h3 class="related-title">Produtos Relacionados</h3>
+                <div class="related-grid">
+                    <div class="related-card">
+                        <div class="related-image">
+                            <img src="placeholder-related1.jpg" alt="Related Product">
+                        </div>
+                        <div class="related-content">
+                            <div class="related-category">MOBILE • NANOCERAMIC</div>
+                            <h4 class="related-name">RazorVision</h4>
+                        </div>
+                    </div>
+                    
+                    <div class="related-card">
+                        <div class="related-image">
+                            <img src="placeholder-related2.jpg" alt="Related Product">
+                        </div>
+                        <div class="related-content">
+                            <div class="related-category">MOBILE • METALFUSION</div>
+                            <h4 class="related-name">ReflexArmor</h4>
+                        </div>
+                    </div>
+                    
+                    <div class="related-card">
+                        <div class="related-image">
+                            <img src="placeholder-related3.jpg" alt="Related Product">
+                        </div>
+                        <div class="related-content">
+                            <div class="related-category">MOBILE • SHIELD-S</div>
+                            <h4 class="related-name">ImpactGuard</h4>
+                        </div>
+                    </div>
+                    
+                    <div class="related-card">
+                        <div class="related-image">
+                            <img src="placeholder-related4.jpg" alt="Related Product">
+                        </div>
+                        <div class="related-content">
+                            <div class="related-category">AIR • NANOCARBON</div>
+                            <h4 class="related-name">GravityZero</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Preloader
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.querySelector('.preloader').classList.add('hidden');
+            }, 1000);
+        });
+        
+        // Scroll Indicator
+        window.addEventListener('scroll', function() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercentage = (scrollTop / scrollHeight) * 100;
+            document.querySelector('.scroll-indicator').style.width = scrollPercentage + '%';
+        });
+        
+        // Theme Toggle
+        document.querySelector('.theme-toggle').addEventListener('click', function() {
+            this.classList.toggle('dark');
+            if (this.classList.contains('dark')) {
+                document.querySelector('.theme-label').textContent = 'Modo Escuro';
+            } else {
+                document.querySelector('.theme-label').textContent = 'Modo Claro';
+            }
+        });
+    </script>
+</body>
+</html>

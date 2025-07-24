@@ -1,0 +1,1255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>W-RANK™ | Dashboard Premium</title>
+    <style>
+        /* Estilos Globais */
+        :root {
+            --black-deep: #000000;
+            --black-secondary: #111111;
+            --white-premium: #FFFFFF;
+            --white-secondary: rgba(255, 255, 255, 0.7);
+            --gold-accent: #D4AF37;
+            --silver-accent: #C0C0C0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background-color: var(--black-deep);
+            color: var(--white-premium);
+            min-height: 100vh;
+            overflow-x: hidden;
+            letter-spacing: 0.05em;
+        }
+        
+        /* Cabeçalho */
+        header {
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 0.5rem;
+            color: var(--white-premium);
+            text-decoration: none;
+        }
+        
+        .logo span {
+            color: var(--white-premium);
+            font-weight: 600;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 3rem;
+        }
+        
+        nav a {
+            color: var(--white-premium);
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+        
+        nav a:hover {
+            color: var(--white-secondary);
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--black-secondary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            border: 1px solid var(--white-secondary);
+        }
+        
+        .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .user-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .user-level {
+            font-size: 0.7rem;
+            color: var(--white-secondary);
+            letter-spacing: 0.1rem;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 6rem 4rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 300;
+            letter-spacing: 0.5rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+        }
+        
+        .hero-title span {
+            font-weight: 600;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 0.2rem;
+            margin-bottom: 5rem;
+            max-width: 800px;
+            color: var(--white-secondary);
+            line-height: 1.8;
+        }
+        
+        /* Status Overview */
+        .status-overview {
+            display: flex;
+            justify-content: space-between;
+            gap: 2rem;
+            margin-bottom: 6rem;
+            width: 100%;
+            max-width: 1200px;
+        }
+        
+        .status-card {
+            flex: 1;
+            background-color: var(--black-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2.5rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .status-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--white-secondary);
+        }
+        
+        .status-title {
+            font-size: 0.9rem;
+            font-weight: 300;
+            letter-spacing: 0.2rem;
+            margin-bottom: 1.5rem;
+            color: var(--white-secondary);
+            text-transform: uppercase;
+        }
+        
+        .status-value {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--white-premium);
+            margin-bottom: 1.5rem;
+        }
+        
+        .status-description {
+            font-size: 0.8rem;
+            line-height: 1.8;
+            color: var(--white-secondary);
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            margin: 1.5rem 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--white-premium);
+            width: 75%;
+        }
+        
+        /* Radar Chart */
+        .radar-section {
+            display: flex;
+            justify-content: space-between;
+            gap: 4rem;
+            margin-bottom: 6rem;
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 2rem;
+        }
+        
+        .radar-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .radar-title {
+            font-size: 1.8rem;
+            font-weight: 300;
+            letter-spacing: 0.3rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        
+        .radar-chart {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            background-color: var(--black-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .radar-svg {
+            width: 300px;
+            height: 300px;
+        }
+        
+        .radar-polygon {
+            fill: rgba(255, 255, 255, 0.05);
+            stroke: var(--white-premium);
+            stroke-width: 1;
+        }
+        
+        .radar-circle {
+            fill: var(--white-premium);
+            r: 3;
+        }
+        
+        .radar-axis {
+            stroke: rgba(255, 255, 255, 0.1);
+            stroke-width: 1;
+        }
+        
+        .radar-label {
+            font-size: 0.7rem;
+            fill: var(--white-secondary);
+            text-anchor: middle;
+            letter-spacing: 0.1rem;
+        }
+        
+        .dimension-list {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .dimension-item {
+            background-color: var(--black-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.8rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .dimension-item:hover {
+            transform: translateX(10px);
+            border-color: var(--white-secondary);
+        }
+        
+        .dimension-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .dimension-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--white-premium);
+        }
+        
+        .dimension-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.1rem;
+            text-transform: uppercase;
+        }
+        
+        .dimension-value {
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-left: auto;
+        }
+        
+        .dimension-progress {
+            width: 100%;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .dimension-bar {
+            height: 100%;
+            background-color: var(--white-premium);
+        }
+        
+        .dimension-description {
+            font-size: 0.8rem;
+            color: var(--white-secondary);
+            line-height: 1.8;
+        }
+        
+        /* Quantum Knowledge */
+        .quantum-knowledge .dimension-bar {
+            width: 85%;
+        }
+        
+        /* Cortex Influence */
+        .cortex-influence .dimension-bar {
+            width: 70%;
+        }
+        
+        /* Neural Memory */
+        .neural-memory .dimension-bar {
+            width: 60%;
+        }
+        
+        /* Tactical Assets */
+        .tactical-assets .dimension-bar {
+            width: 90%;
+        }
+        
+        /* Quantum Impact */
+        .quantum-impact .dimension-bar {
+            width: 65%;
+        }
+        
+        /* Badges Section */
+        .badges-section {
+            padding: 6rem 4rem;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 300;
+            letter-spacing: 0.5rem;
+            margin-bottom: 4rem;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        
+        .section-title span {
+            font-weight: 600;
+        }
+        
+        .badges-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2.5rem;
+            justify-content: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .badge-card {
+            width: 200px;
+            background-color: var(--black-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2.5rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .badge-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--white-secondary);
+        }
+        
+        .badge-icon {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            position: relative;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--white-premium);
+        }
+        
+        .badge-icon::after {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .badge-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            letter-spacing: 0.1rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        
+        .badge-description {
+            font-size: 0.8rem;
+            color: var(--white-secondary);
+            line-height: 1.8;
+        }
+        
+        /* Timeline Section */
+        .timeline-section {
+            padding: 6rem 4rem;
+        }
+        
+        .timeline-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: 30px;
+            position: relative;
+            margin-bottom: 3rem;
+            width: 50%;
+        }
+        
+        .timeline-item:nth-child(even) {
+            align-self: flex-end;
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: 30px;
+            left: 50%;
+        }
+        
+        .timeline-content {
+            background-color: var(--black-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 1.8rem;
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            transition: transform 0.3s ease;
+        }
+        
+        .timeline-content:hover {
+            transform: scale(1.05);
+            border-color: var(--white-secondary);
+        }
+        
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: -15px;
+            width: 15px;
+            height: 15px;
+            background-color: var(--black-deep);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: none;
+            border-left: none;
+            transform: rotate(-45deg);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content::before {
+            right: auto;
+            left: -15px;
+            transform: rotate(135deg);
+        }
+        
+        .timeline-date {
+            font-size: 0.8rem;
+            color: var(--white-secondary);
+            margin-bottom: 0.8rem;
+            letter-spacing: 0.1rem;
+        }
+        
+        .timeline-title {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+        }
+        
+        .timeline-description {
+            font-size: 0.8rem;
+            color: var(--white-secondary);
+            line-height: 1.8;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            top: 20px;
+            right: -8px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--white-premium);
+            border: 3px solid var(--black-deep);
+        }
+        
+        .timeline-item:nth-child(even) .timeline-dot {
+            right: auto;
+            left: -8px;
+        }
+        
+        /* Next Challenges Section */
+        .challenges-section {
+            padding: 6rem 4rem;
+            background-color: rgba(255, 255, 255, 0.02);
+        }
+        
+        .challenges-container {
+            display: flex;
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .challenge-card {
+            flex: 1;
+            background-color: var(--black-secondary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 2.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .challenge-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--white-secondary);
+        }
+        
+        .challenge-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .challenge-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--white-premium);
+        }
+        
+        .challenge-info {
+            flex: 1;
+        }
+        
+        .challenge-title {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1rem;
+        }
+        
+        .challenge-points {
+            font-size: 0.8rem;
+            color: var(--white-secondary);
+        }
+        
+        .challenge-description {
+            font-size: 0.9rem;
+            color: var(--white-secondary);
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+        
+        .challenge-progress {
+            width: 100%;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            margin-bottom: 0.8rem;
+        }
+        
+        .challenge-bar {
+            height: 100%;
+            background-color: var(--white-premium);
+        }
+        
+        .challenge-status {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+            text-align: right;
+        }
+        
+        .challenge-button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: transparent;
+            border: 1px solid var(--white-premium);
+            color: var(--white-premium);
+            text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.1rem;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            margin-top: 2rem;
+        }
+        
+        .challenge-button:hover {
+            background-color: var(--white-premium);
+            color: var(--black-deep);
+        }
+        
+        /* Challenge Types */
+        .challenge-quantum .challenge-bar {
+            width: 30%;
+        }
+        
+        .challenge-cortex .challenge-bar {
+            width: 60%;
+        }
+        
+        .challenge-neural .challenge-bar {
+            width: 45%;
+        }
+        
+        /* Footer */
+        footer {
+            padding: 6rem 4rem 3rem;
+            background-color: var(--black-deep);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 0.3rem;
+            color: var(--white-premium);
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+        }
+        
+        .footer-logo span {
+            font-weight: 600;
+        }
+        
+        .footer-description {
+            max-width: 300px;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: var(--white-secondary);
+        }
+        
+        .footer-links h3 {
+            font-size: 1rem;
+            font-weight: 500;
+            letter-spacing: 0.2rem;
+            margin-bottom: 2rem;
+            color: var(--white-premium);
+            text-transform: uppercase;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 1rem;
+        }
+        
+        .footer-links a {
+            color: var(--white-secondary);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+            letter-spacing: 0.05rem;
+        }
+        
+        .footer-links a:hover {
+            color: var(--white-premium);
+        }
+        
+        .footer-bottom {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 4rem auto 0;
+        }
+        
+        .footer-copyright {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .footer-social a {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 1.2rem;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-social a:hover {
+            color: var(--white-premium);
+        }
+        
+        /* Responsividade */
+        @media (max-width: 1200px) {
+            header,
+            .hero,
+            .badges-section,
+            .timeline-section,
+            .challenges-section,
+            footer {
+                padding: 4rem 2rem;
+            }
+            
+            .status-overview,
+            .radar-section,
+            .challenges-container {
+                flex-direction: column;
+            }
+            
+            .radar-section {
+                gap: 3rem;
+            }
+            
+            .timeline-container::before {
+                left: 30px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 60px;
+                padding-right: 0;
+                justify-content: flex-start;
+            }
+            
+            .timeline-item:nth-child(even) {
+                left: 0;
+                padding-left: 60px;
+            }
+            
+            .timeline-dot {
+                left: 22px;
+                right: auto;
+            }
+            
+            .timeline-item:nth-child(even) .timeline-dot {
+                left: 22px;
+            }
+            
+            .timeline-content {
+                max-width: 100%;
+            }
+            
+            .timeline-content::before {
+                display: none;
+            }
+            
+            .footer-container {
+                flex-direction: column;
+                gap: 3rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            
+            nav ul {
+                gap: 1.5rem;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .badges-container {
+                justify-content: center;
+            }
+            
+            .footer-bottom {
+                flex-direction: column;
+                gap: 1.5rem;
+                text-align: center;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <a href="#" class="logo">W-<span>RANK</span>™</a>
+        <nav>
+            <ul>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Dimensões</a></li>
+                <li><a href="#">Distintivos</a></li>
+                <li><a href="#">Histórico</a></li>
+                <li><a href="#">Desafios</a></li>
+            </ul>
+        </nav>
+        <div class="user-profile">
+            <div class="user-avatar">S</div>
+            <div class="user-info">
+                <div class="user-name">Sofia Mendes</div>
+                <div class="user-level">QUANTUM™</div>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <h1 class="hero-title">W-<span>RANK</span>™</h1>
+        <p class="hero-subtitle">Seu sistema de classificação multidimensional que quantifica status, expertise e envolvimento no ecossistema Winf™.</p>
+        
+        <div class="status-overview">
+            <div class="status-card">
+                <h3 class="status-title">NÍVEL ATUAL</h3>
+                <div class="status-value">QUANTUM™</div>
+                <p class="status-description">Você está no quinto nível de classificação, entre os 15% melhores do ecossistema.</p>
+            </div>
+            <div class="status-card">
+                <h3 class="status-title">PONTOS TOTAIS</h3>
+                <div class="status-value">18.547</div>
+                <div class="progress-container">
+                    <div class="progress-bar"></div>
+                </div>
+                <p class="status-description">Faltam 11.453 pontos para atingir o nível SINGULARITY™.</p>
+            </div>
+            <div class="status-card">
+                <h3 class="status-title">DISTINTIVOS</h3>
+                <div class="status-value">12</div>
+                <p class="status-description">Você conquistou 12 de 25 distintivos disponíveis no ecossistema.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="radar-section">
+        <div class="radar-container">
+            <h2 class="radar-title">RADAR DIMENSIONAL</h2>
+            <div class="radar-chart">
+                <svg class="radar-svg" viewBox="0 0 200 200">
+                    <!-- Background Circles -->
+                    <circle cx="100" cy="100" r="80" fill="none" stroke="rgba(255, 255, 255, 0.05)" />
+                    <circle cx="100" cy="100" r="60" fill="none" stroke="rgba(255, 255, 255, 0.05)" />
+                    <circle cx="100" cy="100" r="40" fill="none" stroke="rgba(255, 255, 255, 0.05)" />
+                    <circle cx="100" cy="100" r="20" fill="none" stroke="rgba(255, 255, 255, 0.05)" />
+                    
+                    <!-- Axes -->
+                    <line class="radar-axis" x1="100" y1="100" x2="100" y2="20" />
+                    <line class="radar-axis" x1="100" y1="100" x2="176" y2="135" />
+                    <line class="radar-axis" x1="100" y1="100" x2="138" y2="176" />
+                    <line class="radar-axis" x1="100" y1="100" x2="62" y2="176" />
+                    <line class="radar-axis" x1="100" y1="100" x2="24" y2="135" />
+                    
+                    <!-- Labels -->
+                    <text class="radar-label" x="100" y="10">Quantum Knowledge</text>
+                    <text class="radar-label" x="186" y="135">Tactical Assets</text>
+                    <text class="radar-label" x="138" y="190">Neural Memory</text>
+                    <text class="radar-label" x="62" y="190">Cortex Influence</text>
+                    <text class="radar-label" x="14" y="135">Quantum Impact</text>
+                    
+                    <!-- Data Polygon -->
+                    <polygon class="radar-polygon" points="100,28 168,135 138,168 62,168 32,135" />
+                    
+                    <!-- Data Points -->
+                    <circle class="radar-circle" cx="100" cy="28" />
+                    <circle class="radar-circle" cx="168" cy="135" />
+                    <circle class="radar-circle" cx="138" cy="168" />
+                    <circle class="radar-circle" cx="62" cy="168" />
+                    <circle class="radar-circle" cx="32" cy="135" />
+                </svg>
+            </div>
+        </div>
+        
+        <div class="dimension-list">
+            <div class="dimension-item quantum-knowledge">
+                <div class="dimension-header">
+                    <div class="dimension-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="dimension-title">QUANTUM KNOWLEDGE™</h3>
+                    <div class="dimension-value">85%</div>
+                </div>
+                <div class="dimension-progress">
+                    <div class="dimension-bar"></div>
+                </div>
+                <p class="dimension-description">Seu conhecimento sobre tecnologias de proteção Winf™ está entre os mais avançados do ecossistema.</p>
+            </div>
+            
+            <div class="dimension-item cortex-influence">
+                <div class="dimension-header">
+                    <div class="dimension-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="dimension-title">CORTEX INFLUENCE™</h3>
+                    <div class="dimension-value">70%</div>
+                </div>
+                <div class="dimension-progress">
+                    <div class="dimension-bar"></div>
+                </div>
+                <p class="dimension-description">Suas contribuições para a comunidade CORTEXCLUB.IO têm impacto significativo.</p>
+            </div>
+            
+            <div class="dimension-item neural-memory">
+                <div class="dimension-header">
+                    <div class="dimension-icon">
+                        <i class="fas fa-memory"></i>
+                    </div>
+                    <h3 class="dimension-title">NEURAL MEMORY™</h3>
+                    <div class="dimension-value">60%</div>
+                </div>
+                <div class="dimension-progress">
+                    <div class="dimension-bar"></div>
+                </div>
+                <p class="dimension-description">Você participou de experiências exclusivas que enriqueceram sua jornada no ecossistema.</p>
+            </div>
+            
+            <div class="dimension-item tactical-assets">
+                <div class="dimension-header">
+                    <div class="dimension-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="dimension-title">TACTICAL ASSETS™</h3>
+                    <div class="dimension-value">90%</div>
+                </div>
+                <div class="dimension-progress">
+                    <div class="dimension-bar"></div>
+                </div>
+                <p class="dimension-description">Seu portfólio de produtos Winf™ demonstra escolhas estratégicas e complementares.</p>
+            </div>
+            
+            <div class="dimension-item quantum-impact">
+                <div class="dimension-header">
+                    <div class="dimension-icon">
+                        <i class="fas fa-wave-square"></i>
+                    </div>
+                    <h3 class="dimension-title">QUANTUM IMPACT™</h3>
+                    <div class="dimension-value">65%</div>
+                </div>
+                <div class="dimension-progress">
+                    <div class="dimension-bar"></div>
+                </div>
+                <p class="dimension-description">Sua capacidade de inspirar outros membros e moldar o ecossistema está em crescimento.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="badges-section">
+        <h2 class="section-title">DISTINTIVOS <span>CONQUISTADOS</span></h2>
+        <div class="badges-container">
+            <div class="badge-card">
+                <div class="badge-icon">
+                    <i class="fas fa-atom"></i>
+                </div>
+                <h3 class="badge-title">QUANTUM PROTECTOR</h3>
+                <p class="badge-description">Expertise avançada em tecnologias de proteção Winf™.</p>
+            </div>
+            
+            <div class="badge-card">
+                <div class="badge-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+                <h3 class="badge-title">CORTEX MENTOR</h3>
+                <p class="badge-description">Contribuições valiosas para orientar novos membros da comunidade.</p>
+            </div>
+            
+            <div class="badge-card">
+                <div class="badge-icon">
+                    <i class="fas fa-vr-cardboard"></i>
+                </div>
+                <h3 class="badge-title">REALITY BENDER</h3>
+                <p class="badge-description">Participação em experiências avançadas no NEUROREALITY.VR.</p>
+            </div>
+            
+            <div class="badge-card">
+                <div class="badge-icon">
+                    <i class="fas fa-chess-knight"></i>
+                </div>
+                <h3 class="badge-title">TACTICAL VISIONARY</h3>
+                <p class="badge-description">Implementações estratégicas de produtos em contextos desafiadores.</p>
+            </div>
+            
+            <div class="badge-card">
+                <div class="badge-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="badge-title">BUTTERFLY EFFECT</h3>
+                <p class="badge-description">Influência significativa que gerou mudanças positivas no ecossistema.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="timeline-section">
+        <h2 class="section-title">LINHA DO <span>TEMPO</span></h2>
+        <div class="timeline-container">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">15 DE MAIO, 2025</div>
+                    <h3 class="timeline-title">NÍVEL QUANTUM™ ALCANÇADO</h3>
+                    <p class="timeline-description">Você atingiu o nível QUANTUM™, entrando para o círculo de elite do ecossistema Winf™.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">28 DE ABRIL, 2025</div>
+                    <h3 class="timeline-title">DISTINTIVO TACTICAL VISIONARY</h3>
+                    <p class="timeline-description">Conquistado após implementação estratégica de produtos em contexto de alta performance.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">10 DE ABRIL, 2025</div>
+                    <h3 class="timeline-title">EXPERIÊNCIA CIRCUITO FECHADO</h3>
+                    <p class="timeline-description">Participação no evento exclusivo de teste da Ferrari SF90 Stradale em circuito fechado.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <div class="timeline-date">22 DE MARÇO, 2025</div>
+                    <h3 class="timeline-title">NÍVEL AMPLIFY™ ALCANÇADO</h3>
+                    <p class="timeline-description">Progressão para o nível AMPLIFY™, desbloqueando acesso a áreas exclusivas nas plataformas.</p>
+                </div>
+                <div class="timeline-dot"></div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="challenges-section">
+        <h2 class="section-title">PRÓXIMOS <span>DESAFIOS</span></h2>
+        <div class="challenges-container">
+            <div class="challenge-card challenge-quantum">
+                <div class="challenge-header">
+                    <div class="challenge-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="challenge-info">
+                        <h3 class="challenge-title">DOMÍNIO TÉCNICO AVANÇADO</h3>
+                        <div class="challenge-points">+ 1.500 pontos</div>
+                    </div>
+                </div>
+                <p class="challenge-description">Complete o curso avançado sobre nanotecnologia de proteção e aplique o conhecimento em um caso real.</p>
+                <div class="challenge-progress">
+                    <div class="challenge-bar"></div>
+                </div>
+                <div class="challenge-status">30% Completo</div>
+                <a href="#" class="challenge-button">Continuar Desafio</a>
+            </div>
+            
+            <div class="challenge-card challenge-cortex">
+                <div class="challenge-header">
+                    <div class="challenge-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="challenge-info">
+                        <h3 class="challenge-title">MENTOR DE ELITE</h3>
+                        <div class="challenge-points">+ 2.000 pontos</div>
+                    </div>
+                </div>
+                <p class="challenge-description">Oriente 5 novos membros ASCEND™ e receba avaliações positivas de todos eles.</p>
+                <div class="challenge-progress">
+                    <div class="challenge-bar"></div>
+                </div>
+                <div class="challenge-status">3/5 Completados</div>
+                <a href="#" class="challenge-button">Continuar Desafio</a>
+            </div>
+            
+            <div class="challenge-card challenge-neural">
+                <div class="challenge-header">
+                    <div class="challenge-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="challenge-info">
+                        <h3 class="challenge-title">EXPERIÊNCIA GLOBAL</h3>
+                        <div class="challenge-points">+ 3.000 pontos</div>
+                    </div>
+                </div>
+                <p class="challenge-description">Participe do evento global exclusivo WINF SUMMIT 2025 em Mônaco.</p>
+                <div class="challenge-progress">
+                    <div class="challenge-bar"></div>
+                </div>
+                <div class="challenge-status">Inscrição Confirmada</div>
+                <a href="#" class="challenge-button">Ver Detalhes</a>
+            </div>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-info">
+                <div class="footer-logo">W-<span>RANK</span>™</div>
+                <p class="footer-description">Sistema de classificação e reconhecimento premium que quantifica status, expertise e envolvimento no ecossistema Winf™.</p>
+            </div>
+            <div class="footer-links">
+                <h3>LINKS RÁPIDOS</h3>
+                <ul>
+                    <li><a href="#">Dashboard</a></li>
+                    <li><a href="#">Dimensões</a></li>
+                    <li><a href="#">Distintivos</a></li>
+                    <li><a href="#">Histórico</a></li>
+                    <li><a href="#">Desafios</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>ECOSSISTEMA WINF™</h3>
+                <ul>
+                    <li><a href="#">QUANTUMWINF.AI</a></li>
+                    <li><a href="#">NEUROMESH.AI</a></li>
+                    <li><a href="#">CORTEXCLUB.IO</a></li>
+                    <li><a href="#">SYNTHWAVE.FM</a></li>
+                    <li><a href="#">DARKMATTER.SHOP</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h3>SUPORTE</h3>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Contato</a></li>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="footer-copyright">© 2025 WINF™. Todos os direitos reservados.</div>
+            <div class="footer-social">
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-youtube"></i></a>
+                <a href="#"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Animações de entrada
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animação para cards de status
+            const statusCards = document.querySelectorAll('.status-card');
+            statusCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'translateY(20px)';
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.5s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'translateY(0)';
+                    }, 100 * index);
+                }, 500);
+            });
+            
+            // Animação para dimensões
+            const dimensionItems = document.querySelectorAll('.dimension-item');
+            dimensionItems.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(-20px)';
+                    setTimeout(() => {
+                        item.style.transition = 'all 0.5s ease';
+                        item.style.opacity = '1';
+                        item.style.transform = 'translateX(0)';
+                    }, 100 * index);
+                }, 1000);
+            });
+            
+            // Animação para badges
+            const badgeCards = document.querySelectorAll('.badge-card');
+            badgeCards.forEach((card, index) => {
+                setTimeout(() => {
+                    card.style.opacity = '0';
+                    card.style.transform = 'scale(0.8)';
+                    setTimeout(() => {
+                        card.style.transition = 'all 0.5s ease';
+                        card.style.opacity = '1';
+                        card.style.transform = 'scale(1)';
+                    }, 100 * index);
+                }, 1500);
+            });
+        });
+    </script>
+</body>
+</html>

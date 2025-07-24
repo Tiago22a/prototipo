@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winf - Área de Membros</title>
+    <style>
+        /* Reset e Estilos Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        :root {
+            --bg-primary: #F5F5F5;
+            --bg-secondary: #FFFFFF;
+            --bg-tertiary: #EEEEEE;
+            --text-primary: #0D0D0D;
+            --text-secondary: #333333;
+            --text-tertiary: #666666;
+            --accent-primary: #1A1A1A;
+            --accent-secondary: #333333;
+            --border-color: #DDDDDD;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+        }
+        
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-secondary);
+            border-right: 1px solid var(--border-color);
+            padding: 32px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        
+        .sidebar-header {
+            padding: 0 24px 24px;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 24px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: 0.1em;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+        
+        .logo span {
+            font-weight: 300;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-top: 16px;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--accent-primary);
+            margin-right: 12px;
+        }
+        
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .user-role {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        
+        .sidebar-nav {
+            padding: 0 16px;
+        }
+        
+        .nav-section {
+            margin-bottom: 24px;
+        }
+        
+        .nav-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: var(--text-tertiary);
+            margin-bottom: 12px;
+            padding: 0 8px;
+        }
+        
+        .nav-items {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: 4px;
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            padding: 10px 8px;
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+        
+        .nav-link:hover {
+            background-color: var(--bg-tertiary);
+        }
+        
+        .nav-link.active {
+            background-color: var(--accent-primary);
+            color: white;
+        }
+        
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            background-color: var(--text-tertiary);
+            border-radius: 4px;
+        }
+        
+        .nav-link.active .nav-icon {
+            background-color: white;
+        }
+        
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            border-top: 1px solid var(--border-color);
+            margin-top: auto;
+        }
+        
+        .theme-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 20px;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .toggle-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--text-tertiary);
+            transition: .4s;
+            border-radius: 20px;
+        }
+        
+        .toggle-slider:before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .toggle-slider {
+            background-color: var(--accent-primary);
+        }
+        
+        input:checked + .toggle-slider:before {
+            transform: translateX(20px);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 32px;
+        }
+        
+        .page-header {
+            margin-bottom: 32px;
+        }
+        
+        .page-title {
+            font-size: 24px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .page-description {
+            font-size: 14px;
+            color: var(--text-tertiary);
+        }
+        
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+        
+        .dashboard-card {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .card-title {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .card-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--accent-primary);
+            border-radius: 8px;
+        }
+        
+        .card-value {
+            font-size: 32px;
+            font-weight: 300;
+            margin-bottom: 8px;
+        }
+        
+        .card-subtitle {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        
+        /* Recent Activity */
+        .recent-activity {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px var(--shadow-color);
+            margin-bottom: 32px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 500;
+        }
+        
+        .view-all {
+            font-size: 14px;
+            color: var(--accent-primary);
+            text-decoration: none;
+        }
+        
+        .activity-list {
+            list-style: none;
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--accent-secondary);
+            border-radius: 8px;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-title {
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .activity-description {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+        
+        .activity-time {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-left: 16px;
+        }
+        
+        /* Courses Section */
+        .courses-section {
+            background-color: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        
+        .course-card {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px var(--shadow-color);
+        }
+        
+        .course-image {
+            height: 160px;
+            background-color: var(--accent-secondary);
+        }
+        
+        .course-content {
+            padding: 16px;
+        }
+        
+        .course-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .course-description {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-bottom: 16px;
+        }
+        
+        .course-progress {
+            height: 4px;
+            background-color: var(--bg-tertiary);
+            border-radius: 2px;
+            margin-bottom: 8px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background-color: var(--accent-primary);
+            border-radius: 2px;
+        }
+        
+        .progress-text {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-align: right;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 1024px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .courses-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 80px;
+                padding: 24px 0;
+            }
+            
+            .sidebar-header {
+                padding: 0 16px 16px;
+            }
+            
+            .logo {
+                font-size: 18px;
+                text-align: center;
+            }
+            
+            .user-info, .nav-section-title, .theme-label, .user-role {
+                display: none;
+            }
+            
+            .nav-link {
+                justify-content: center;
+                padding: 12px 8px;
+            }
+            
+            .nav-icon {
+                margin-right: 0;
+            }
+            
+            .nav-text {
+                display: none;
+            }
+            
+            .theme-toggle {
+                justify-content: center;
+                padding: 16px;
+            }
+            
+            .main-content {
+                margin-left: 80px;
+                padding: 24px;
+            }
+            
+            .dashboard-grid, .courses-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Dark Theme */
+        .dark-theme {
+            --bg-primary: #0D0D0D;
+            --bg-secondary: #1A1A1A;
+            --bg-tertiary: #333333;
+            --text-primary: #F5F5F5;
+            --text-secondary: #CCCCCC;
+            --text-tertiary: #999999;
+            --accent-primary: #F5F5F5;
+            --accent-secondary: #CCCCCC;
+            --border-color: #333333;
+            --shadow-color: rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">WINF<span>™</span></div>
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <div>
+                        <div class="user-name">João Silva</div>
+                        <div class="user-role">Licenciado Premium</div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <div class="nav-section">
+                    <div class="nav-section-title">Principal</div>
+                    <ul class="nav-items">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link active">
+                                <div class="nav-icon"></div>
+                                <span class="nav-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <div class="nav-icon"></div>
+                                <span class="nav-text">Meus Produtos</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <div class="nav-icon"></div>
+                                <span class="nav-text">Treinamentos</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <div class="nav-icon"></div>
+                                <span class="nav-text">Simulador 3D</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Licenciado</div>
+                    <ul class="nav-items">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <div class="nav-icon"></div>
+                                <span class="nav-text">Minha One-Page</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <div class="nav-icon"></div>
+                                <span class="nav-text">Materiais de Marketing</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <div class="nav-icon"></div>
+                                <span class="nav-text">Pedidos</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <div class="nav-icon"></div>
+                                <span class="nav-text">Suporte</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-section-title">Configurações</div>
+                    <ul class="nav-items">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <div class="nav-icon"></div>
+                                <span class="nav-text">Meu Perfil</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <div class="nav-icon"></div>
+                                <span class="nav-text">Preferências</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            
+            <div class="theme-toggle">
+                <span class="theme-label">Tema Claro</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="theme-toggle">
+                    <span class="toggle-slider"></span>
+                </label>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="page-header">
+                <h1 class="page-title">Dashboard</h1>
+                <p class="page-description">Bem-vindo de volta, João. Aqui está um resumo da sua atividade.</p>
+            </div>
+            
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Vendas do Mês</h2>
+                        <div class="card-icon"></div>
+                    </div>
+                    <div class="card-value">R$ 24.850</div>
+                    <div class="card-subtitle">+12% em relação ao mês anterior</div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Clientes Atendidos</h2>
+                        <div class="card-icon"></div>
+                    </div>
+                    <div class="card-value">18</div>
+                    <div class="card-subtitle">+5 novos clientes este mês</div>
+                </div>
+                
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h2 class="card-title">Nível de Licenciado</h2>
+                        <div class="card-icon"></div>
+                    </div>
+                    <div class="card-value">Premium</div>
+                    <div class="card-subtitle">75 pontos para o próximo nível</div>
+                </div>
+            </div>
+            
+            <div class="recent-activity">
+                <div class="section-header">
+                    <h2 class="section-title">Atividade Recente</h2>
+                    <a href="#" class="view-all">Ver tudo</a>
+                </div>
+                
+                <ul class="activity-list">
+                    <li class="activity-item">
+                        <div class="activity-icon"></div>
+                        <div class="activity-content">
+                            <h3 class="activity-title">Pedido #1234 concluído</h3>
+                            <p class="activity-description">Pedido de AeroCore™ PhantomStrike entregue ao cliente</p>
+                        </div>
+                        <div class="activity-time">Hoje, 14:30</div>
+                    </li>
+                    
+                    <li class="activity-item">
+                        <div class="activity-icon"></div>
+                        <div class="activity-content">
+                            <h3 class="activity-title">Novo treinamento disponível</h3>
+                            <p class="activity-description">Técnicas avançadas de aplicação NeoSkin™ ADV-X</p>
+                        </div>
+                        <div class="activity-time">Ontem, 09:15</div>
+                    </li>
+                    
+                    <li class="activity-item">
+                        <div class="activity-icon"></div>
+                        <div class="activity-content">
+                            <h3 class="activity-title">Simulação 3D compartilhada</h3>
+                            <p class="activity-description">Simulação enviada para cliente via WhatsApp</p>
+                        </div>
+                        <div class="activity-time">22/05, 16:45</div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="courses-section">
+                <div class="section-header">
+                    <h2 class="section-title">Meus Cursos</h2>
+                    <a href="#" class="view-all">Ver todos</a>
+                </div>
+                
+                <div class="courses-grid">
+                    <div class="course-card">
+                        <div class="course-image"></div>
+                        <div class="course-content">
+                            <h3 class="course-title">Aplicação AeroCore™</h3>
+                            <p class="course-description">Técnicas avançadas para aplicação em veículos de luxo</p>
+                            <div class="course-progress">
+                                <div class="progress-bar" style="width: 75%"></div>
+                            </div>
+                            <div class="progress-text">75% concluído</div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card">
+                        <div class="course-image"></div>
+                        <div class="course-content">
+                            <h3 class="course-title">Marketing Premium</h3>
+                            <p class="course-description">Estratégias para atrair clientes de alto padrão</p>
+                            <div class="course-progress">
+                                <div class="progress-bar" style="width: 40%"></div>
+                            </div>
+                            <div class="progress-text">40% concluído</div>
+                        </div>
+                    </div>
+                    
+                    <div class="course-card">
+                        <div class="course-image"></div>
+                        <div class="course-content">
+                            <h3 class="course-title">Simulador 3D Avançado</h3>
+                            <p class="course-description">Domine todas as funcionalidades do simulador Winf</p>
+                            <div class="course-progress">
+                                <div class="progress-bar" style="width: 10%"></div>
+                            </div>
+                            <div class="progress-text">10% concluído</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        // Toggle Theme
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('change', function() {
+            if (this.checked) {
+                document.body.classList.add('dark-theme');
+            } else {
+                document.body.classList.remove('dark-theme');
+            }
+        });
+    </script>
+</body>
+</html>
