@@ -1,0 +1,2158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Winf Licenciamento - Tecnologia Chinesa Premium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --black: #121212;
+            --dark-gray: #1e1e1e;
+            --gray: #333333;
+            --medium-gray: #666666;
+            --light-gray: #999999;
+            --lighter-gray: #f5f5f5;
+            --blue: #0A3D62;
+            --gold: #D4AF37;
+            --red-china: #DE2910;
+            --white: #FFFFFF;
+            --border-radius: 8px;
+            --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --transition-speed: 0.3s;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.6;
+            background-color: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--gold);
+            transition: all var(--transition-speed) ease;
+        }
+
+        a:hover {
+            color: var(--red-china);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background-color: var(--black);
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+            transition: all var(--transition-speed) ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(18, 18, 18, 0.95);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--white);
+        }
+
+        .logo span {
+            color: var(--gold);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-left: 30px;
+        }
+
+        .nav-link {
+            color: var(--white);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .nav-link:hover {
+            color: var(--gold);
+        }
+
+        .nav-link.active {
+            color: var(--gold);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+        }
+
+        .cta-button {
+            background-color: var(--gold);
+            color: var(--black);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .cta-button:hover {
+            background-color: var(--red-china);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 21px;
+            cursor: pointer;
+        }
+
+        .menu-toggle span {
+            display: block;
+            height: 3px;
+            width: 100%;
+            background-color: var(--white);
+            transition: all var(--transition-speed) ease;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background-image: url('assets/images/hero-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.4));
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 600px;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 30px;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all var(--transition-speed) ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--gold);
+            color: var(--black);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--red-china);
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--white);
+            border: 2px solid var(--white);
+            margin-left: 15px;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--white);
+            color: var(--black);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Sections */
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-subtitle {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gold);
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .section-description {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Benefits Section */
+        .benefits {
+            background-color: var(--dark-gray);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .benefit-card {
+            background-color: var(--black);
+            border-radius: var(--border-radius);
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .benefit-icon {
+            font-size: 3rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .benefit-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .benefit-description {
+            color: var(--light-gray);
+        }
+
+        .benefit-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin: 20px 0;
+        }
+
+        /* About Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .about-image {
+            flex: 1;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .about-text {
+            flex: 1;
+        }
+
+        .about-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .about-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background-color: var(--gold);
+        }
+
+        .about-description {
+            margin-bottom: 30px;
+        }
+
+        .about-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .about-feature {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .feature-icon {
+            margin-right: 15px;
+            font-size: 1.2rem;
+            color: var(--gold);
+        }
+
+        /* Products Section */
+        .products {
+            background-color: var(--dark-gray);
+        }
+
+        .products-slider {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-slide {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+
+        .product-image {
+            flex: 1;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+        }
+
+        .product-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .product-content {
+            flex: 1;
+        }
+
+        .product-category {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--gold);
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .product-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .product-description {
+            margin-bottom: 30px;
+            color: var(--light-gray);
+        }
+
+        .product-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .product-feature {
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .product-feature-icon {
+            margin-right: 10px;
+            color: var(--gold);
+        }
+
+        .product-stats {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .product-stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--light-gray);
+        }
+
+        /* Map Section */
+        .map-section {
+            position: relative;
+        }
+
+        .map-container {
+            height: 600px;
+            background-color: var(--dark-gray);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 50px;
+            left: 50px;
+            background-color: var(--black);
+            padding: 40px;
+            border-radius: var(--border-radius);
+            max-width: 400px;
+            box-shadow: var(--card-shadow);
+            z-index: 1;
+        }
+
+        .map-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .map-description {
+            margin-bottom: 30px;
+            color: var(--light-gray);
+        }
+
+        .territory-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .territory-item {
+            margin-bottom: 10px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .territory-item::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+        }
+
+        .available {
+            color: #4CAF50;
+        }
+
+        .reserved {
+            color: #FFC107;
+        }
+
+        .sold {
+            color: #F44336;
+        }
+
+        /* Process Section */
+        .process {
+            background-color: var(--dark-gray);
+        }
+
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background-color: var(--gold);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+        }
+
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .timeline-content {
+            position: relative;
+            width: 45%;
+            padding: 30px;
+            background-color: var(--black);
+            border-radius: var(--border-radius);
+            box-shadow: var(--card-shadow);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-right: auto;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: -15px;
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-right: 15px solid var(--black);
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 30px;
+            right: -15px;
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 15px solid var(--black);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 30px;
+            background-color: var(--gold);
+            border-radius: 50%;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--black);
+            font-weight: 700;
+        }
+
+        .timeline-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .timeline-description {
+            color: var(--light-gray);
+        }
+
+        .timeline-duration {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 5px 10px;
+            background-color: var(--dark-gray);
+            border-radius: 3px;
+            font-size: 0.8rem;
+            color: var(--gold);
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background-color: var(--black);
+        }
+
+        .testimonials-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .testimonial-item {
+            background-color: var(--dark-gray);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+            text-align: center;
+        }
+
+        .testimonial-text {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .testimonial-text::before,
+        .testimonial-text::after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--gold);
+            position: absolute;
+            opacity: 0.3;
+        }
+
+        .testimonial-text::before {
+            top: -20px;
+            left: -10px;
+        }
+
+        .testimonial-text::after {
+            bottom: -40px;
+            right: -10px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .author-image {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-bottom: 15px;
+            border: 3px solid var(--gold);
+        }
+
+        .author-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .author-title {
+            font-size: 0.9rem;
+            color: var(--light-gray);
+        }
+
+        .author-location {
+            font-size: 0.9rem;
+            color: var(--gold);
+            margin-top: 5px;
+        }
+
+        .testimonial-results {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--gray);
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .result-item {
+            text-align: center;
+        }
+
+        .result-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .result-label {
+            font-size: 0.8rem;
+            color: var(--light-gray);
+        }
+
+        /* ROI Calculator */
+        .roi-calculator {
+            background-color: var(--dark-gray);
+        }
+
+        .calculator-container {
+            background-color: var(--black);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .calculator-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .calculator-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--light-gray);
+        }
+
+        .form-control {
+            width: 100%;
+            height: 50px;
+            background-color: var(--dark-gray);
+            border: none;
+            border-radius: 5px;
+            padding: 0 15px;
+            font-size: 1rem;
+            color: var(--white);
+        }
+
+        .form-control:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--gold);
+        }
+
+        .range-slider {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .calculator-results {
+            background-color: var(--dark-gray);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            text-align: center;
+        }
+
+        .results-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .result-box {
+            background-color: var(--black);
+            border-radius: 5px;
+            padding: 20px;
+        }
+
+        .result-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 10px;
+        }
+
+        .result-name {
+            font-size: 0.9rem;
+            color: var(--light-gray);
+        }
+
+        .calculator-cta {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        /* Contact Form */
+        .contact-form-section {
+            background-color: var(--black);
+        }
+
+        .form-container {
+            display: flex;
+            gap: 50px;
+        }
+
+        .form-left {
+            flex: 1;
+        }
+
+        .form-right {
+            flex: 1;
+            background-color: var(--dark-gray);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .form-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .form-subtitle {
+            color: var(--light-gray);
+            margin-bottom: 30px;
+        }
+
+        .benefits-list {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .benefit-item {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .benefit-item-icon {
+            margin-right: 15px;
+            color: var(--gold);
+        }
+
+        .contact-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-textarea {
+            width: 100%;
+            height: 120px;
+            background-color: var(--black);
+            border: none;
+            border-radius: 5px;
+            padding: 15px;
+            font-size: 1rem;
+            color: var(--white);
+            resize: none;
+        }
+
+        .form-textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--gold);
+        }
+
+        .form-checkbox {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        .checkbox-input {
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+
+        .checkbox-label {
+            font-size: 0.9rem;
+            color: var(--light-gray);
+        }
+
+        .checkbox-label a {
+            color: var(--gold);
+        }
+
+        .form-submit {
+            grid-column: span 2;
+            margin-top: 20px;
+        }
+
+        /* FAQ Section */
+        .faq {
+            background-color: var(--dark-gray);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-search {
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            height: 60px;
+            background-color: var(--black);
+            border: none;
+            border-radius: 30px;
+            padding: 0 30px 0 60px;
+            font-size: 1rem;
+            color: var(--white);
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--gold);
+        }
+
+        .search-icon {
+            position: absolute;
+            top: 50%;
+            left: 30px;
+            transform: translateY(-50%);
+            color: var(--gold);
+        }
+
+        .accordion {
+            list-style: none;
+        }
+
+        .accordion-item {
+            background-color: var(--black);
+            border-radius: var(--border-radius);
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+
+        .accordion-header {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .accordion-header:hover {
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        .accordion-title {
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .accordion-icon {
+            font-size: 1.2rem;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .accordion-content {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all var(--transition-speed) ease;
+        }
+
+        .accordion-text {
+            padding-bottom: 20px;
+            color: var(--light-gray);
+        }
+
+        .accordion-item.active .accordion-header {
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        .accordion-item.active .accordion-icon {
+            transform: rotate(180deg);
+        }
+
+        .accordion-item.active .accordion-content {
+            max-height: 300px;
+        }
+
+        .faq-contact {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .faq-contact-text {
+            margin-bottom: 20px;
+            color: var(--light-gray);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--black);
+            padding: 80px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--white);
+        }
+
+        .footer-logo span {
+            color: var(--gold);
+        }
+
+        .footer-description {
+            color: var(--light-gray);
+            margin-bottom: 20px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--dark-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .social-link:hover {
+            background-color: var(--gold);
+            color: var(--black);
+            transform: translateY(-3px);
+        }
+
+        .footer-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 30px;
+            height: 2px;
+            background-color: var(--gold);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-link {
+            margin-bottom: 10px;
+        }
+
+        .footer-link a {
+            color: var(--light-gray);
+            transition: all var(--transition-speed) ease;
+        }
+
+        .footer-link a:hover {
+            color: var(--gold);
+            padding-left: 5px;
+        }
+
+        .contact-info {
+            list-style: none;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            color: var(--light-gray);
+        }
+
+        .contact-icon {
+            margin-right: 15px;
+            color: var(--gold);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--dark-gray);
+            padding-top: 30px;
+            text-align: center;
+            color: var(--light-gray);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: var(--gold);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .about-content, .product-slide, .form-container {
+                flex-direction: column;
+            }
+
+            .about-image, .about-text, .product-image, .product-content, .form-left, .form-right {
+                flex: none;
+                width: 100%;
+            }
+
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+            }
+
+            .timeline-item:nth-child(even) .timeline-content::before {
+                left: -15px;
+                right: auto;
+                border-right: 15px solid var(--black);
+                border-left: none;
+            }
+
+            .timeline-dot {
+                left: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: flex;
+            }
+
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background-color: var(--black);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transition: all var(--transition-speed) ease;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-item {
+                margin: 15px 0;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-description {
+                font-size: 1rem;
+            }
+
+            .btn {
+                padding: 12px 25px;
+                font-size: 0.9rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .calculator-form, .contact-form {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width, .form-submit {
+                grid-column: span 1;
+            }
+
+            .results-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .map-overlay {
+                position: relative;
+                top: 0;
+                left: 0;
+                max-width: 100%;
+                margin-bottom: 30px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section {
+                padding: 70px 0;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .btn-secondary {
+                margin-left: 0;
+                margin-top: 15px;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .slide-in-left.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .slide-in-right.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .scale-in.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="#" class="logo">Winf<span>.</span></a>
+            <div class="menu-toggle" id="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <ul class="nav-menu" id="nav-menu">
+                <li class="nav-item"><a href="#" class="nav-link active">Início</a></li>
+                <li class="nav-item"><a href="#benefits" class="nav-link">Benefícios</a></li>
+                <li class="nav-item"><a href="#about" class="nav-link">Sobre</a></li>
+                <li class="nav-item"><a href="#products" class="nav-link">Produtos</a></li>
+                <li class="nav-item"><a href="#territories" class="nav-link">Territórios</a></li>
+                <li class="nav-item"><a href="#process" class="nav-link">Processo</a></li>
+            </ul>
+            <div class="header-actions">
+                <a href="#contact" class="cta-button">Quero ser Licenciado</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h3 class="hero-subtitle">Licenciamento Exclusivo</h3>
+            <h1 class="hero-title">Seja o Representante Oficial da Tecnologia Chinesa Premium no Brasil</h1>
+            <p class="hero-description">Transforme seu negócio com a exclusividade territorial da Winf, a marca que simplifica o mercado de películas com tecnologia de ponta e produtos de elite.</p>
+            <div class="hero-buttons">
+                <a href="#contact" class="btn btn-primary">Quero ser um Licenciado</a>
+                <a href="#about" class="btn btn-secondary">Saiba Mais</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="section benefits" id="benefits">
+        <div class="container">
+            <div class="section-header">
+                <h4 class="section-subtitle fade-in">Vantagens Exclusivas</h4>
+                <h2 class="section-title fade-in">Por que se tornar um Licenciado Winf?</h2>
+                <p class="section-description fade-in">Descubra os benefícios de representar a marca que está revolucionando o mercado com tecnologia chinesa premium e um conceito inovador de simplificação.</p>
+            </div>
+            <div class="benefits-grid">
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">🔒</div>
+                    <h3 class="benefit-title">Exclusividade Territorial</h3>
+                    <p class="benefit-description">Seja o único representante oficial da Winf em sua região, com proteção territorial garantida por contrato.</p>
+                    <div class="benefit-number">100%</div>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">📈</div>
+                    <h3 class="benefit-title">Margens Superiores</h3>
+                    <p class="benefit-description">Produtos premium com margens de lucro significativamente maiores que a média do mercado.</p>
+                    <div class="benefit-number">+45%</div>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">🎯</div>
+                    <h3 class="benefit-title">Demanda Simplificada</h3>
+                    <p class="benefit-description">De 1.000 opções para apenas o essencial, facilitando estoque, vendas e treinamento.</p>
+                    <div class="benefit-number">-80%</div>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">🚀</div>
+                    <h3 class="benefit-title">Suporte Completo</h3>
+                    <p class="benefit-description">Treinamento, marketing, materiais exclusivos e suporte técnico contínuo para seu sucesso.</p>
+                    <div class="benefit-number">24/7</div>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">🌐</div>
+                    <h3 class="benefit-title">Tecnologia Global</h3>
+                    <p class="benefit-description">Acesso à tecnologia chinesa de ponta, a mesma utilizada por grandes marcas globais como Apple e Tesla.</p>
+                    <div class="benefit-number">#1</div>
+                </div>
+                <div class="benefit-card fade-in">
+                    <div class="benefit-icon">🛡️</div>
+                    <h3 class="benefit-title">Diferenciação Premium</h3>
+                    <p class="benefit-description">Posicionamento exclusivo no mercado com produtos de elite e narrativa de marca sofisticada.</p>
+                    <div class="benefit-number">Elite</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="section-header">
+                <h4 class="section-subtitle fade-in">Sobre a Winf</h4>
+                <h2 class="section-title fade-in">Tecnologia Chinesa, Simplicidade Estratégica</h2>
+                <p class="section-description fade-in">Conheça a marca que está transformando o mercado de películas com um conceito inovador e tecnologia de ponta.</p>
+            </div>
+            <div class="about-content">
+                <div class="about-image slide-in-left">
+                    <img src="assets/images/about.jpg" alt="Sobre a Winf">
+                </div>
+                <div class="about-text slide-in-right">
+                    <h3 class="about-title">De 1.000 opções para apenas o essencial</h3>
+                    <p class="about-description">A Winf nasceu da percepção de que o mercado de películas estava extremamente complexo, com mais de 1.000 opções disponíveis, gerando confusão tanto para técnicos e lojistas quanto para o consumidor final.</p>
+                    <p class="about-description">Com base em 30 anos de experiência e reunindo os melhores especialistas do setor, identificamos uma grade de produtos de elite que atende às necessidades reais do mercado, sem complicação e com o máximo de tecnologia possível.</p>
+                    <ul class="about-features">
+                        <li class="about-feature">
+                            <span class="feature-icon">✓</span>
+                            <span>Tecnologia chinesa de última geração, a mesma utilizada por grandes marcas globais</span>
+                        </li>
+                        <li class="about-feature">
+                            <span class="feature-icon">✓</span>
+                            <span>Conceito de simplificação que facilita a escolha, estoque e treinamento</span>
+                        </li>
+                        <li class="about-feature">
+                            <span class="feature-icon">✓</span>
+                            <span>Posicionamento premium com foco em performance e sofisticação</span>
+                        </li>
+                        <li class="about-feature">
+                            <span class="feature-icon">✓</span>
+                            <span>Programa de licenciamento exclusivo com territórios protegidos</span>
+                        </li>
+                        <li class="about-feature">
+                            <span class="feature-icon">✓</span>
+                            <span>Suporte completo para licenciados com materiais exclusivos e treinamento</span>
+                        </li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Quero ser um Licenciado</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section products" id="products">
+        <div class="container">
+            <div class="section-header">
+                <h4 class="section-subtitle fade-in">Grade de Produtos de Elite</h4>
+                <h2 class="section-title fade-in">Tecnologia Premium Simplificada</h2>
+                <p class="section-description fade-in">Conheça as linhas exclusivas que compõem nossa grade de elite, cuidadosamente selecionadas para oferecer o máximo em performance e sofisticação.</p>
+            </div>
+            <div class="products-slider fade-in">
+                <div class="product-slide">
+                    <div class="product-image">
+                        <img src="assets/images/product-winf-select.jpg" alt="Winf Select">
+                    </div>
+                    <div class="product-content">
+                        <div class="product-category">Linha Arquitetônica</div>
+                        <h3 class="product-title">Winf Select™</h3>
+                        <p class="product-description">Linha arquitetônica de alto rendimento para vidros inteligentes, com tecnologia avançada de controle solar e térmico.</p>
+                        <ul class="product-features">
+                            <li class="product-feature">
+                                <span class="product-feature-icon">•</span>
+                                <span>Invisible - Transparência com alta performance térmica</span>
+                            </li>
+                            <li class="product-feature">
+                                <span class="product-feature-icon">•</span>
+                                <span>DualReflect - Reflexão controlada e proteção térmica</span>
+                            </li>
+                            <li class="product-feature">
+                                <span class="product-feature-icon">•</span>
+                                <span>BlackPro - Máxima privacidade e controle solar</span>
+                            </li>
+                            <li class="product-feature">
+                                <span class="product-feature-icon">•</span>
+                                <span>Redução de calor em até 80%</span>
+                            </li>
+                        </ul>
+                        <div class="product-stats">
+                            <div class="product-stat">
+                                <div class="stat-number">75%</div>
+                                <div class="stat-label">Margem Média</div>
+                            </div>
+                            <div class="product-stat">
+                                <div class="stat-number">R$1.2M</div>
+                                <div class="stat-label">Potencial Anual</div>
+                            </div>
+                            <div class="product-stat">
+                                <div class="stat-number">35%</div>
+                                <div class="stat-label">Crescimento</div>
+                            </div>
+                        </div>
+                        <a href="#" class="btn btn-primary">Saiba Mais</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="section map-section" id="territories">
+        <div class="container">
+            <div class="section-header">
+                <h4 class="section-subtitle fade-in">Territórios Exclusivos</h4>
+                <h2 class="section-title fade-in">Oportunidades de Licenciamento</h2>
+                <p class="section-description fade-in">Descubra as regiões disponíveis para se tornar um licenciado exclusivo Winf e representar oficialmente nossa tecnologia premium.</p>
+            </div>
+            <div class="map-container fade-in">
+                <div class="map-overlay">
+                    <h3 class="map-title">Territórios Disponíveis</h3>
+                    <p class="map-description">Cada território é cuidadosamente delimitado para garantir exclusividade e potencial de mercado para nossos licenciados.</p>
+                    <ul class="territory-list">
+                        <li class="territory-item available">São Paulo - Zona Oeste</li>
+                        <li class="territory-item available">Rio de Janeiro - Zona Sul</li>
+                        <li class="territory-item reserved">Belo Horizonte (Reservado)</li>
+                        <li class="territory-item available">Brasília</li>
+                        <li class="territory-item sold">Curitiba (Vendido)</li>
+                        <li class="territory-item available">Porto Alegre</li>
+                        <li class="territory-item available">Salvador</li>
+                        <li class="territory-item available">Recife</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary">Verificar Disponibilidade</a>
+                </div>
+                <!-- Map will be inserted here via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="section process" id="process">
+        <div class="container">
+            <div class="section-header">
+                <h4 class="section-subtitle fade-in">Como Funciona</h4>
+                <h2 class="section-title fade-in">Processo de Licenciamento</h2>
+                <p class="section-description fade-in">Conheça o passo a passo para se tornar um licenciado exclusivo Winf e iniciar sua jornada com a tecnologia chinesa premium.</p>
+            </div>
+            <div class="timeline fade-in">
+                <div class="timeline-item">
+                    <div class="timeline-dot">1</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Contato Inicial</h3>
+                        <p class="timeline-description">Preencha o formulário de interesse e nossa equipe entrará em contato para uma conversa inicial sobre o programa de licenciamento.</p>
+                        <span class="timeline-duration">1-2 dias</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">2</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Apresentação Detalhada</h3>
+                        <p class="timeline-description">Reunião online ou presencial para apresentação completa do modelo de negócio, produtos, margens e potencial de mercado.</p>
+                        <span class="timeline-duration">1 semana</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">3</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Análise de Território</h3>
+                        <p class="timeline-description">Estudo detalhado do território de interesse, com mapeamento de potencial de mercado, concorrência e projeções financeiras.</p>
+                        <span class="timeline-duration">2 semanas</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">4</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Contrato e Investimento</h3>
+                        <p class="timeline-description">Formalização do contrato de licenciamento exclusivo, definição de metas e realização do investimento inicial.</p>
+                        <span class="timeline-duration">1-2 semanas</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">5</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Onboarding e Treinamento</h3>
+                        <p class="timeline-description">Programa completo de capacitação técnica e comercial, acesso à plataforma exclusiva e materiais de marketing.</p>
+                        <span class="timeline-duration">1 mês</span>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">6</div>
+                    <div class="timeline-content">
+                        <h3 class="timeline-title">Lançamento Oficial</h3>
+                        <p class="timeline-description">Evento de lançamento da marca em seu território, com suporte da equipe Winf e estratégia de divulgação coordenada.</p>
+                        <span class="timeline-duration">Data específica</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="section testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h4 class="section-subtitle fade-in">Casos de Sucesso</h4>
+                <h2 class="section-title fade-in">O que Nossos Licenciados Dizem</h2>
+                <p class="section-description fade-in">Conheça as histórias de sucesso de empreendedores que já fazem parte da rede de licenciados Winf.</p>
+            </div>
+            <div class="testimonials-slider fade-in">
+                <div class="testimonial-item">
+                    <p class="testimonial-text">Depois de anos no mercado de películas, estava cansado da complexidade e das margens cada vez menores. A Winf transformou meu negócio com um conceito que realmente faz sentido: simplificar e focar no que realmente importa. Hoje tenho uma operação muito mais enxuta, com margens superiores e clientes muito mais satisfeitos.</p>
+                    <div class="testimonial-author">
+                        <div class="author-image">
+                            <img src="assets/images/testimonial-1.jpg" alt="Carlos Mendes">
+                        </div>
+                        <h4 class="author-name">Carlos Mendes</h4>
+                        <p class="author-title">Licenciado Winf desde 2024</p>
+                        <p class="author-location">Curitiba, PR</p>
+                    </div>
+                    <div class="testimonial-results">
+                        <div class="result-item">
+                            <div class="result-number">68%</div>
+                            <div class="result-label">Aumento de Margem</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-number">42%</div>
+                            <div class="result-label">Redução de Estoque</div>
+                        </div>
+                        <div class="result-item">
+                            <div class="result-number">R$980K</div>
+                            <div class="result-label">Faturamento Anual</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROI Calculator -->
+    <section class="section roi-calculator" id="calculator">
+        <div class="container">
+            <div class="section-header">
+                <h4 class="section-subtitle fade-in">Simulador Financeiro</h4>
+                <h2 class="section-title fade-in">Calcule seu Potencial de Retorno</h2>
+                <p class="section-description fade-in">Utilize nossa calculadora para simular o potencial de retorno do seu investimento como licenciado Winf.</p>
+            </div>
+            <div class="calculator-container fade-in">
+                <h3 class="calculator-title">Simulador de ROI para Licenciados</h3>
+                <div class="calculator-form">
+                    <div>
+                        <div class="form-group">
+                            <label class="form-label">Território de Interesse</label>
+                            <select class="form-control" id="territory">
+                                <option value="sp-oeste">São Paulo - Zona Oeste</option>
+                                <option value="rj-sul">Rio de Janeiro - Zona Sul</option>
+                                <option value="brasilia">Brasília</option>
+                                <option value="poa">Porto Alegre</option>
+                                <option value="salvador">Salvador</option>
+                                <option value="recife">Recife</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Investimento Inicial (R$)</label>
+                            <input type="number" class="form-control" id="investment" value="150000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Projeção de Vendas Mensais (R$)</label>
+                            <input type="number" class="form-control" id="monthly-sales" value="80000">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label class="form-label">Margem Média (%)</label>
+                            <input type="range" class="range-slider" id="margin" min="30" max="80" value="55">
+                            <output for="margin" id="margin-value">55%</output>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Custos Operacionais Mensais (R$)</label>
+                            <input type="number" class="form-control" id="costs" value="25000">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Período de Análise (meses)</label>
+                            <select class="form-control" id="period">
+                                <option value="12">12 meses</option>
+                                <option value="24">24 meses</option>
+                                <option value="36" selected>36 meses</option>
+                                <option value="48">48 meses</option>
+                                <option value="60">60 meses</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="calculator-results">
+                    <h4 class="results-title">Resultados da Simulação</h4>
+                    <div class="results-grid">
+                        <div class="result-box">
+                            <div class="result-value" id="roi">215%</div>
+                            <div class="result-name">ROI Total</div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-value" id="payback">14 meses</div>
+                            <div class="result-name">Tempo de Payback</div>
+                        </div>
+                        <div class="result-box">
+                            <div class="result-value" id="profit">R$ 322.500</div>
+                            <div class="result-name">Lucro Líquido Total</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="calculator-cta">
+                    <a href="#contact" class="btn btn-primary">Quero Saber Mais</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form -->
+    <section class="section contact-form-section" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h4 class="section-subtitle fade-in">Entre em Contato</h4>
+                <h2 class="section-title fade-in">Torne-se um Licenciado Exclusivo</h2>
+                <p class="section-description fade-in">Preencha o formulário abaixo para iniciar sua jornada como representante oficial da tecnologia chinesa premium Winf.</p>
+            </div>
+            <div class="form-container fade-in">
+                <div class="form-left">
+                    <h3 class="form-title">Por que se tornar um Licenciado Winf?</h3>
+                    <p class="form-subtitle">Ao se tornar um licenciado exclusivo, você terá acesso a:</p>
+                    <ul class="benefits-list">
+                        <li class="benefit-item">
+                            <span class="benefit-item-icon">✓</span>
+                            <span>Exclusividade territorial garantida por contrato</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-item-icon">✓</span>
+                            <span>Grade de produtos de elite com tecnologia chinesa premium</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-item-icon">✓</span>
+                            <span>Margens superiores à média do mercado</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-item-icon">✓</span>
+                            <span>Treinamento técnico e comercial completo</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-item-icon">✓</span>
+                            <span>Materiais de marketing exclusivos e personalizados</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-item-icon">✓</span>
+                            <span>Suporte contínuo da equipe Winf</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-item-icon">✓</span>
+                            <span>Acesso à plataforma exclusiva para licenciados</span>
+                        </li>
+                        <li class="benefit-item">
+                            <span class="benefit-item-icon">✓</span>
+                            <span>Participação em eventos e treinamentos exclusivos</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="form-right">
+                    <form class="contact-form">
+                        <div class="form-group">
+                            <label class="form-label">Nome Completo*</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">E-mail*</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Telefone*</label>
+                            <input type="tel" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Cidade/Estado*</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        <div class="form-group full-width">
+                            <label class="form-label">Território de Interesse*</label>
+                            <select class="form-control" required>
+                                <option value="">Selecione uma opção</option>
+                                <option value="sp-oeste">São Paulo - Zona Oeste</option>
+                                <option value="rj-sul">Rio de Janeiro - Zona Sul</option>
+                                <option value="brasilia">Brasília</option>
+                                <option value="poa">Porto Alegre</option>
+                                <option value="salvador">Salvador</option>
+                                <option value="recife">Recife</option>
+                                <option value="outro">Outro (especifique na mensagem)</option>
+                            </select>
+                        </div>
+                        <div class="form-group full-width">
+                            <label class="form-label">Mensagem</label>
+                            <textarea class="form-textarea" placeholder="Conte-nos sobre sua experiência no setor e por que deseja se tornar um licenciado Winf..."></textarea>
+                        </div>
+                        <div class="form-checkbox">
+                            <input type="checkbox" id="privacy" class="checkbox-input" required>
+                            <label for="privacy" class="checkbox-label">Concordo com a <a href="#">Política de Privacidade</a> e autorizo o contato da equipe Winf.</label>
+                        </div>
+                        <div class="form-submit">
+                            <button type="submit" class="btn btn-primary">Enviar Solicitação</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section faq" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h4 class="section-subtitle fade-in">Perguntas Frequentes</h4>
+                <h2 class="section-title fade-in">Dúvidas sobre o Licenciamento</h2>
+                <p class="section-description fade-in">Encontre respostas para as perguntas mais comuns sobre o programa de licenciamento exclusivo Winf.</p>
+            </div>
+            <div class="faq-container fade-in">
+                <div class="faq-search">
+                    <span class="search-icon">🔍</span>
+                    <input type="text" class="search-input" placeholder="Buscar pergunta...">
+                </div>
+                <ul class="accordion">
+                    <li class="accordion-item active">
+                        <div class="accordion-header">
+                            <h3 class="accordion-title">Qual é o investimento inicial para se tornar um licenciado Winf?</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content" style="max-height: 300px;">
+                            <p class="accordion-text">O investimento inicial varia de acordo com o território e seu potencial de mercado, mas geralmente está entre R$ 100.000 e R$ 250.000. Este valor inclui a taxa de licenciamento, estoque inicial, materiais de marketing e treinamento completo. Oferecemos também opções de parcelamento e financiamento para facilitar o início da operação.</p>
+                        </div>
+                    </li>
+                    <li class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="accordion-title">Como funciona a exclusividade territorial?</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="accordion-text">A exclusividade territorial é garantida por contrato e define uma área geográfica específica onde apenas você poderá comercializar os produtos Winf como licenciado oficial. Os territórios são delimitados considerando população, potencial econômico e viabilidade logística. Respeitamos rigorosamente esses limites e oferecemos proteção contra invasões territoriais.</p>
+                        </div>
+                    </li>
+                    <li class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="accordion-title">Preciso ter experiência prévia no setor de películas?</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="accordion-text">Embora a experiência prévia no setor seja valorizada, não é um requisito obrigatório. Nosso programa de treinamento é completo e preparado para capacitar empreendedores de diferentes backgrounds. O mais importante é ter perfil empreendedor, capacidade de investimento e alinhamento com os valores da marca. Muitos de nossos licenciados de sucesso vieram de outros setores e encontraram na Winf uma oportunidade de diversificação.</p>
+                        </div>
+                    </li>
+                    <li class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="accordion-title">Qual é o tempo médio de retorno do investimento (payback)?</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="accordion-text">O tempo médio de retorno do investimento varia entre 12 e 18 meses, dependendo do território e da execução do plano de negócios. Nossos licenciados atuais têm conseguido resultados ainda mais rápidos devido às margens superiores dos produtos Winf e ao modelo de negócio simplificado, que reduz custos operacionais e otimiza o estoque.</p>
+                        </div>
+                    </li>
+                    <li class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="accordion-title">Que tipo de suporte a Winf oferece aos licenciados?</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="accordion-text">Oferecemos um suporte completo que inclui: treinamento técnico e comercial inicial, materiais de marketing exclusivos, acesso à plataforma online para licenciados, suporte técnico contínuo, consultoria de negócios, encontros periódicos de atualização, campanhas de marketing coordenadas e um gerente de relacionamento dedicado para acompanhar seu desenvolvimento.</p>
+                        </div>
+                    </li>
+                    <li class="accordion-item">
+                        <div class="accordion-header">
+                            <h3 class="accordion-title">Posso vender os produtos Winf online?</h3>
+                            <span class="accordion-icon">▼</span>
+                        </div>
+                        <div class="accordion-content">
+                            <p class="accordion-text">Sim, os licenciados podem vender os produtos Winf online, respeitando a política de preços mínimos e direcionando as vendas apenas para seu território. Oferecemos suporte para a criação de sua loja virtual e integração com a plataforma central Winf. Também disponibilizamos materiais digitais exclusivos e estratégias de marketing online específicas para cada região.</p>
+                        </div>
+                    </li>
+                </ul>
+                <div class="faq-contact">
+                    <p class="faq-contact-text">Não encontrou a resposta que procurava?</p>
+                    <a href="#contact" class="btn btn-primary">Fale Conosco</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-info">
+                    <h3 class="footer-logo">Winf<span>.</span></h3>
+                    <p class="footer-description">Tecnologia chinesa premium para arquitetura e mobilidade. Simplificando escolhas com o máximo em performance e sofisticação.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">f</a>
+                        <a href="#" class="social-link">in</a>
+                        <a href="#" class="social-link">ig</a>
+                        <a href="#" class="social-link">yt</a>
+                    </div>
+                </div>
+                <div class="footer-links-col">
+                    <h4 class="footer-title">Licenciamento</h4>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#benefits">Benefícios</a></li>
+                        <li class="footer-link"><a href="#territories">Territórios</a></li>
+                        <li class="footer-link"><a href="#process">Processo</a></li>
+                        <li class="footer-link"><a href="#calculator">Simulador</a></li>
+                        <li class="footer-link"><a href="#faq">Perguntas Frequentes</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links-col">
+                    <h4 class="footer-title">Produtos</h4>
+                    <ul class="footer-links">
+                        <li class="footer-link"><a href="#">Winf Select™</a></li>
+                        <li class="footer-link"><a href="#">AeroCore™</a></li>
+                        <li class="footer-link"><a href="#">NeoSkin™ ADV-X</a></li>
+                        <li class="footer-link"><a href="#">Catálogo Completo</a></li>
+                        <li class="footer-link"><a href="#">Tecnologia Chinesa</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4 class="footer-title">Contato</h4>
+                    <ul class="contact-info">
+                        <li class="contact-item">
+                            <span class="contact-icon">📍</span>
+                            <span>Av. Paulista, 1000, São Paulo - SP</span>
+                        </li>
+                        <li class="contact-item">
+                            <span class="contact-icon">📱</span>
+                            <span>+55 11 99999-9999</span>
+                        </li>
+                        <li class="contact-item">
+                            <span class="contact-icon">✉️</span>
+                            <span>licenciamento@winf.com.br</span>
+                        </li>
+                        <li class="contact-item">
+                            <span class="contact-icon">🕒</span>
+                            <span>Seg - Sex: 9h às 18h</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Winf™. Todos os direitos reservados. | Tecnologia Chinesa Premium</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navMenu = document.getElementById('nav-menu');
+
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Scroll Header
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+
+                    // Close mobile menu if open
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
+            });
+        });
+
+        // Animations on Scroll
+        function checkAnimations() {
+            const elements = document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right, .scale-in');
+            
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (elementPosition < windowHeight - 100) {
+                    element.classList.add('active');
+                }
+            });
+        }
+
+        // Run animations on load and scroll
+        window.addEventListener('load', checkAnimations);
+        window.addEventListener('scroll', checkAnimations);
+
+        // Active Navigation Links
+        function setActiveNavLink() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (window.scrollY >= sectionTop - 200 && window.scrollY < sectionTop + sectionHeight - 200) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                const href = link.getAttribute('href');
+                
+                if (href === '#' + currentSection || (href === '#' && currentSection === 'home')) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', setActiveNavLink);
+        window.addEventListener('load', setActiveNavLink);
+
+        // Accordion
+        const accordionItems = document.querySelectorAll('.accordion-item');
+        
+        accordionItems.forEach(item => {
+            const header = item.querySelector('.accordion-header');
+            
+            header.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all items
+                accordionItems.forEach(accItem => {
+                    accItem.classList.remove('active');
+                    const content = accItem.querySelector('.accordion-content');
+                    content.style.maxHeight = null;
+                });
+                
+                // Open clicked item if it was not active
+                if (!isActive) {
+                    item.classList.add('active');
+                    const content = item.querySelector('.accordion-content');
+                    content.style.maxHeight = content.scrollHeight + 'px';
+                }
+            });
+        });
+
+        // ROI Calculator
+        const marginSlider = document.getElementById('margin');
+        const marginValue = document.getElementById('margin-value');
+        
+        marginSlider.addEventListener('input', () => {
+            marginValue.textContent = marginSlider.value + '%';
+            calculateROI();
+        });
+        
+        const investmentInput = document.getElementById('investment');
+        const monthlySalesInput = document.getElementById('monthly-sales');
+        const costsInput = document.getElementById('costs');
+        const periodSelect = document.getElementById('period');
+        
+        investmentInput.addEventListener('input', calculateROI);
+        monthlySalesInput.addEventListener('input', calculateROI);
+        costsInput.addEventListener('input', calculateROI);
+        periodSelect.addEventListener('change', calculateROI);
+        
+        function calculateROI() {
+            const investment = parseFloat(investmentInput.value);
+            const monthlySales = parseFloat(monthlySalesInput.value);
+            const margin = parseFloat(marginSlider.value) / 100;
+            const costs = parseFloat(costsInput.value);
+            const period = parseInt(periodSelect.value);
+            
+            const monthlyProfit = (monthlySales * margin) - costs;
+            const totalProfit = monthlyProfit * period;
+            const roi = (totalProfit / investment) * 100;
+            const payback = investment / monthlyProfit;
+            
+            document.getElementById('roi').textContent = roi.toFixed(0) + '%';
+            document.getElementById('payback').textContent = payback.toFixed(1) + ' meses';
+            document.getElementById('profit').textContent = 'R$ ' + totalProfit.toLocaleString('pt-BR');
+        }
+        
+        // Initialize calculator
+        calculateROI();
+
+        // Brazil Map (placeholder for actual implementation)
+        // This would be replaced with an actual interactive map implementation
+        const mapContainer = document.querySelector('.map-container');
+        
+        // Create a simple placeholder map
+        const mapPlaceholder = document.createElement('div');
+        mapPlaceholder.style.position = 'absolute';
+        mapPlaceholder.style.top = '0';
+        mapPlaceholder.style.left = '0';
+        mapPlaceholder.style.width = '100%';
+        mapPlaceholder.style.height = '100%';
+        mapPlaceholder.style.backgroundColor = '#1e1e1e';
+        mapPlaceholder.style.backgroundImage = 'url("assets/images/brazil-map.jpg")';
+        mapPlaceholder.style.backgroundSize = 'contain';
+        mapPlaceholder.style.backgroundPosition = 'center';
+        mapPlaceholder.style.backgroundRepeat = 'no-repeat';
+        mapPlaceholder.style.opacity = '0.7';
+        
+        mapContainer.appendChild(mapPlaceholder);
+    </script>
+</body>
+</html>
